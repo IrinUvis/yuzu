@@ -1,4 +1,4 @@
-package com.example.yuzu.ui.theme
+package uvis.irin.yuzu.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

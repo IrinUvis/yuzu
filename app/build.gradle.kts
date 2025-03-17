@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.yuzu"
-    compileSdk = 35
+    namespace = "uvis.irin.yuzu"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.example.yuzu"
-        minSdk = 28
-        targetSdk = 35
+        applicationId = "uvis.irin.yuzu"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 

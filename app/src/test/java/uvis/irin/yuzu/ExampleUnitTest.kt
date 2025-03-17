@@ -1,4 +1,4 @@
-package com.example.yuzu
+package uvis.irin.yuzu
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
