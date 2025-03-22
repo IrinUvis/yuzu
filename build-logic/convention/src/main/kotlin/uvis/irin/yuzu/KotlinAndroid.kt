@@ -2,15 +2,17 @@ package uvis.irin.yuzu
 
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
+import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
-internal fun configureKotlinAndroid(
+internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension<*, *, *, *, *, *>,
 ) {
     commonExtension.apply {
-        compileSdk = 35
+        compileSdk = findLibsVersion("compileSdk").toInt()
 
         defaultConfig {
-            minSdk = 28
+            minSdk = findLibsVersion("minSdk").toInt()
         }
 
         compileOptions {

@@ -3,6 +3,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import uvis.irin.yuzu.configureKotlinAndroid
+import uvis.irin.yuzu.findLibsVersion
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -14,7 +15,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         extensions.configure<ApplicationExtension> {
             configureKotlinAndroid(this)
 
-            defaultConfig.targetSdk = 35
+            defaultConfig.targetSdk = findLibsVersion("targetSdk").toInt()
         }
     }
 }
