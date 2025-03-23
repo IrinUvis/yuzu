@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
+    alias(libs.plugins.detekt)
 }
 
 group = "uvis.irin.yuzu.build-logic"
@@ -17,10 +18,17 @@ tasks.withType<KotlinCompile>().configureEach {
     }
 }
 
+detekt {
+    config.setFrom(File(rootProject.rootDir, "./../config/detekt/detekt.yml"))
+    autoCorrect = true
+}
+
 dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.detekt.gradle.plugin)
+
+    detektPlugins(libs.detekt.formatting)
 }
 
 gradlePlugin {
@@ -32,6 +40,14 @@ gradlePlugin {
         register("androidLibrary") {
             id = "uvis.irin.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidApplicationCompose") {
+            id = "uvis.irin.android.applicationCompose"
+            implementationClass = "AndroidApplicationComposeConventionPlugin"
+        }
+        register("androidLibraryCompose") {
+            id = "uvis.irin.android.libraryCompose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
         register("detekt") {
             id = "uvis.irin.detekt"

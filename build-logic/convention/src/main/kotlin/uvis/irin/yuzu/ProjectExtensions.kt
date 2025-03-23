@@ -7,6 +7,4 @@ import org.gradle.plugin.use.PluginDependency
 
 val Project.libs get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-fun Project.findLibsVersion(name: String): String = libs.findVersion(name).get().requiredVersion
-
 fun Project.findLibsPlugin(name: String): PluginDependency = libs.findPlugin(name).get().get()

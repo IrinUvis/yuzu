@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package uvis.irin.yuzu
 
 import com.android.build.api.dsl.CommonExtension
@@ -18,10 +20,11 @@ internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension<*, *, *, *, *, *>,
 ) {
     commonExtension.apply {
-        compileSdk = findLibsVersion("compileSdk").toInt()
+        compileSdk = 35
 
         defaultConfig {
-            minSdk = findLibsVersion("minSdk").toInt()
+            @Suppress("MagicNumber")
+            minSdk = 28
         }
 
         compileOptions {
@@ -46,11 +49,10 @@ internal fun Project.configureKotlinJvm() {
     configureKotlin<KotlinJvmProjectExtension>()
 }
 
-
 /**
  * Configure base Kotlin options
  */
-private inline fun <reified T: KotlinBaseExtension> Project.configureKotlin() = configure<T> {
+private inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() = configure<T> {
     when (this) {
         is KotlinAndroidProjectExtension -> compilerOptions
         is KotlinJvmProjectExtension -> compilerOptions
