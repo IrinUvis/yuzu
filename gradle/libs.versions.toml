@@ -37,9 +37,11 @@ detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-form
 # Own plugins
 uvis-irin-android-application = { id = "uvis.irin.android.application" }
 uvis-irin-detekt = { id = "uvis.irin.detekt" }
+uvis-irin-jvm-library = { id = "uvis.irin.jvm.library" }
 
 # External plugins
 android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

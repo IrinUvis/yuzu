@@ -37,5 +37,9 @@ gradlePlugin {
             id = "uvis.irin.detekt"
             implementationClass = "DetektConventionPlugin"
         }
+        register("jvmLibrary") {
+            id = "uvis.irin.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
     }
 }
