@@ -5,13 +5,14 @@ import org.gradle.api.tasks.Copy
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
+import uvis.irin.yuzu.findLibsPlugin
 import uvis.irin.yuzu.libs
 import java.io.File
 
 class DetektConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {
-            apply("io.gitlab.arturbosch.detekt")
+            apply(findLibsPlugin("detekt").pluginId)
         }
 
         configureDetekt()

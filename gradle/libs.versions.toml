@@ -34,8 +34,11 @@ detekt-gradle-plugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-g
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 [plugins]
+# Own plugins
 uvis-irin-android-application = { id = "uvis.irin.android.application" }
 uvis-irin-detekt = { id = "uvis.irin.detekt" }
+
+# External plugins
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
