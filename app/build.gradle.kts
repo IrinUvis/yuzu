@@ -1,3 +1,5 @@
+import uvis.irin.yuzu.YuzuBuildType
+
 plugins {
     alias(libs.plugins.uvis.irin.android.application)
     alias(libs.plugins.uvis.irin.detekt)
@@ -16,7 +18,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = YuzuBuildType.DEBUG.applicationIdSuffix
+        }
         release {
+            applicationIdSuffix = YuzuBuildType.RELEASE.applicationIdSuffix
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
