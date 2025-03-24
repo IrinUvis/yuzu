@@ -9,6 +9,8 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2025.03.00"
 detekt = "1.23.8"
+appcompat = "1.7.0"
+material = "1.12.0"
 
 [libraries]
 # Gradle plugins
@@ -32,6 +34,8 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 # Own plugins
@@ -39,6 +43,8 @@ uvis-irin-android-application = { id = "uvis.irin.android.application" }
 uvis-irin-android-library = { id = "uvis.irin.android.library" }
 uvis-irin-android-applicationCompose = { id = "uvis.irin.android.applicationCompose" }
 uvis-irin-android-libraryCompose = { id = "uvis.irin.android.libraryCompose" }
+uvis-irin-android-applicationIntegrationTest = { id = "uvis.irin.android.applicationIntegrationTest" }
+uvis-irin-android-libraryIntegrationTest = { id = "uvis.irin.android.libraryIntegrationTest" }
 uvis-irin-detekt = { id = "uvis.irin.detekt" }
 uvis-irin-jvm-library = { id = "uvis.irin.jvm.library" }
 

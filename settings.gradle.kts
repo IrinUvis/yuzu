@@ -25,6 +25,7 @@ include(
     ":app",
     ":feature:wordgenerator",
     ":core:common",
+    ":core:design-system"
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

@@ -49,6 +49,14 @@ gradlePlugin {
             id = "uvis.irin.android.libraryCompose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+        register("androidApplicationIntegrationTest") {
+            id = "uvis.irin.android.applicationIntegrationTest"
+            implementationClass = "AndroidApplicationIntegrationTestConventionPlugin"
+        }
+        register("androidLibraryIntegrationTest") {
+            id = "uvis.irin.android.libraryIntegrationTest"
+            implementationClass = "AndroidLibraryIntegrationTestConventionPlugin"
+        }
         register("detekt") {
             id = "uvis.irin.detekt"
             implementationClass = "DetektConventionPlugin"

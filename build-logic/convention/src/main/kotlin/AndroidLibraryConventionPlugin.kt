@@ -2,7 +2,7 @@ import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import uvis.irin.yuzu.TARGET_SDK
+import uvis.irin.yuzu.TargetSdk
 import uvis.irin.yuzu.configureKotlinAndroid
 import uvis.irin.yuzu.findLibsPlugin
 
@@ -16,7 +16,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         extensions.configure<LibraryExtension> {
             configureKotlinAndroid(this)
 
-            defaultConfig.targetSdk = TARGET_SDK
+            defaultConfig.targetSdk = TargetSdk
         }
     }
 }
