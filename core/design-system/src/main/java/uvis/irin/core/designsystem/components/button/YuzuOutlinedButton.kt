@@ -43,15 +43,15 @@ fun YuzuOutlinedButton(
 @PreviewLightDark
 @Composable
 private fun YuzuPrimaryButtonPreview(
-    @PreviewParameter(ButtonPreviewParameterProvider::class) buttonSpec: ButtonPreviewParameterProvider.ButtonSpec,
+    @PreviewParameter(ButtonPreviewParameterProvider::class) spec: ButtonPreviewParameterProvider.ButtonSpec,
 ) {
     YuzuPreview {
         YuzuOutlinedButton(
             modifier = Modifier.padding(4.dp),
             onClick = {},
-            enabled = buttonSpec.enabled,
-            icon = buttonSpec.icon,
-            content = { Text(buttonSpec.text) },
+            enabled = spec.enabled,
+            icon = spec.icon,
+            content = { Text(spec.text) },
         )
     }
 }

@@ -12,3 +12,6 @@ fun YuzuPreview(content: @Composable () -> Unit) {
         }
     }
 }
+
+internal const val LongLoremIpsumText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+    "Maecenas quis arcu porttitor, bibendum tortor ut, ornare erat"

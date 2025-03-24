@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import uvis.irin.core.designsystem.theme.YuzuTheme
-import uvis.irin.feature.wordgenerator.WordGeneratorScreen
+import uvis.irin.feature.wordgenerator.ui.WordGeneratorScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
