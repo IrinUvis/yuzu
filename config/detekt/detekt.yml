@@ -753,7 +753,7 @@ style:
   UnusedPrivateMember:
     active: true
     allowedNames: ''
-    ignoreAnnotated: ['Preview']
+    ignoreAnnotated: ['Preview', 'PreviewDynamicColors', 'PreviewLightDark']
   UnusedPrivateProperty:
     active: true
     allowedNames: '_|ignored|expected|serialVersionUID'
@@ -862,9 +862,9 @@ formatting:
     autoCorrect: true
     maxLineLength: 120
   FunctionSignature:
-    active: false
+    active: true
     autoCorrect: true
-    forceMultilineWhenParameterCountGreaterOrEqualThan: 2147483647
+    forceMultilineWhenParameterCountGreaterOrEqualThan: 2
     functionBodyExpressionWrapping: 'default'
     maxLineLength: 120
     indentSize: 4

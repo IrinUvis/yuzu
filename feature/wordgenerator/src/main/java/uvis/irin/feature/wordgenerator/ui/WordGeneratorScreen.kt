@@ -1,17 +1,13 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package uvis.irin.feature.wordgenerator.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -34,8 +30,9 @@ fun WordGeneratorScreen(modifier: Modifier = Modifier) {
                     YuzuIconButton(
                         modifier = modifier,
                         onClick = { },
-                        icon = YuzuIcon.Help,
-                    )
+                    ) {
+                        YuzuIcon(icon = YuzuIcon.Help)
+                    }
                 },
             )
         },
@@ -66,10 +63,19 @@ private fun WordGeneratorActions(modifier: Modifier = Modifier) {
     ) {
         GenerateWordButton(onClick = {})
         GeneratedWordSection()
+        WordGenerationSettings()
     }
 }
 
-@Preview
+@Composable
+private fun WordGenerationSettings(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+    }
+}
+
 @PreviewDynamicColors
 @PreviewLightDark
 @Composable

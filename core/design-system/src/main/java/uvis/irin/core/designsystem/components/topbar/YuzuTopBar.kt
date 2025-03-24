@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import uvis.irin.core.designsystem.components.button.YuzuIconButton
@@ -23,8 +22,9 @@ fun YuzuTopBar(
     navigationIcon: @Composable () -> Unit = {
         YuzuIconButton(
             onClick = onNavigationIconClick,
-            icon = YuzuIcon.ArrowBack,
-        )
+        ) {
+            YuzuIcon(icon = YuzuIcon.ArrowBack)
+        }
     },
     actions: @Composable (RowScope.() -> Unit) = {},
 ) {
@@ -36,7 +36,6 @@ fun YuzuTopBar(
     )
 }
 
-@Preview
 @PreviewDynamicColors
 @PreviewLightDark
 @Composable
