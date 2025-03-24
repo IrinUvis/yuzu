@@ -21,8 +21,10 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "yuzu"
-include(":app")
-include(":core:common")
-include(":feature:wordgenerator")
+include(
+    ":app",
+    ":feature:wordgenerator",
+    ":core:common",
+)
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
