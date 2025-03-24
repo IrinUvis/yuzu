@@ -4,6 +4,7 @@ import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import uvis.irin.yuzu.TARGET_SDK
 import uvis.irin.yuzu.configureKotlinAndroid
 import uvis.irin.yuzu.findLibsPlugin
 
@@ -17,7 +18,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         extensions.configure<ApplicationExtension> {
             configureKotlinAndroid(this)
 
-            defaultConfig.targetSdk = 35
+            defaultConfig.targetSdk = TARGET_SDK
         }
     }
 }

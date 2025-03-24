@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "yuzu"
 include(":app")
+include(":core:common")
+include(":feature:wordgenerator")

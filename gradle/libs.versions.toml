@@ -38,7 +38,7 @@ detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-form
 uvis-irin-android-application = { id = "uvis.irin.android.application" }
 uvis-irin-android-library = { id = "uvis.irin.android.library" }
 uvis-irin-android-applicationCompose = { id = "uvis.irin.android.applicationCompose" }
-uvis-irin-android-library-compose = { id = "uvis.irin.android.libraryCompose" }
+uvis-irin-android-libraryCompose = { id = "uvis.irin.android.libraryCompose" }
 uvis-irin-detekt = { id = "uvis.irin.detekt" }
 uvis-irin-jvm-library = { id = "uvis.irin.jvm.library" }
 
