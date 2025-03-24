@@ -24,3 +24,5 @@ rootProject.name = "yuzu"
 include(":app")
 include(":core:common")
 include(":feature:wordgenerator")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
