@@ -9,6 +9,8 @@ android {
 }
 
 dependencies {
+    api(projects.core.designSystem)
+
     implementation(projects.core.common)
 
     testImplementation(libs.junit)

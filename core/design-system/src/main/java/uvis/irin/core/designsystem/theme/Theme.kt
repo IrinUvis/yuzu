@@ -1,4 +1,4 @@
-package uvis.irin.yuzu.ui.theme
+package uvis.irin.core.designsystem.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

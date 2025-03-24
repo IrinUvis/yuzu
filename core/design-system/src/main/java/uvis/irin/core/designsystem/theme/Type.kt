@@ -1,4 +1,4 @@
-package uvis.irin.yuzu.ui.theme
+package uvis.irin.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 
