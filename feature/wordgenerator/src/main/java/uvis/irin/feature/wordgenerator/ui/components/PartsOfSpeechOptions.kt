@@ -42,27 +42,44 @@ private fun PartsOfSpeechCheckboxGroup(
     selectedPartsOfSpeech: Set<PartOfSpeech>,
     onClick: (PartOfSpeech) -> Unit,
 ) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
+    Column(modifier = modifier) {
         PartOfSpeechCheckbox(
+            modifier = Modifier.partOfSpeechModifier(
+                partOfSpeech = PartOfSpeech.Noun,
+                onClick = onClick,
+            ),
             partOfSpeech = PartOfSpeech.Noun,
             checked = PartOfSpeech.Noun in selectedPartsOfSpeech,
             onClick = onClick,
         )
         PartOfSpeechCheckbox(
+            modifier = Modifier.partOfSpeechModifier(
+                partOfSpeech = PartOfSpeech.Verb,
+                onClick = onClick,
+            ),
             partOfSpeech = PartOfSpeech.Verb,
             checked = PartOfSpeech.Verb in selectedPartsOfSpeech,
             onClick = onClick,
         )
         PartOfSpeechCheckbox(
+            modifier = Modifier.partOfSpeechModifier(
+                partOfSpeech = PartOfSpeech.Adjective,
+                onClick = onClick,
+            ),
             partOfSpeech = PartOfSpeech.Adjective,
             checked = PartOfSpeech.Adjective in selectedPartsOfSpeech,
             onClick = onClick,
         )
     }
 }
+
+@Composable
+private fun Modifier.partOfSpeechModifier(
+    partOfSpeech: PartOfSpeech,
+    onClick: (PartOfSpeech) -> Unit,
+) = this
+    .clickable { onClick(partOfSpeech) }
+    .padding(vertical = 4.dp, horizontal = 16.dp)
 
 @Composable
 private fun PartOfSpeechCheckbox(
@@ -72,7 +89,7 @@ private fun PartOfSpeechCheckbox(
     onClick: (PartOfSpeech) -> Unit,
 ) {
     YuzuCheckboxOption(
-        modifier = modifier.clickable { onClick(partOfSpeech) }.padding(horizontal = 16.dp),
+        modifier = modifier,
         checked = checked,
         onCheckedChange = { onClick(partOfSpeech) },
     ) {

@@ -40,22 +40,35 @@ private fun LanguageOptionRadioGroup(
     selectedLanguage: Language,
     onClick: (Language) -> Unit,
 ) {
-    Column(
-        modifier = modifier.selectableGroup(),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
+    Column(modifier = modifier.selectableGroup()) {
         LanguageRadioButton(
+            modifier = Modifier.languageOptionModifier(
+                language = Language.English,
+                onClick = onClick,
+            ),
             language = Language.English,
             selected = selectedLanguage == Language.English,
             onClick = onClick,
         )
         LanguageRadioButton(
+            modifier = Modifier.languageOptionModifier(
+                language = Language.Polish,
+                onClick = onClick,
+            ),
             language = Language.Polish,
             selected = selectedLanguage == Language.Polish,
             onClick = onClick,
         )
     }
 }
+
+@Composable
+private fun Modifier.languageOptionModifier(
+    language: Language,
+    onClick: (Language) -> Unit,
+) = this
+    .clickable { onClick(language) }
+    .padding(vertical = 4.dp, horizontal = 16.dp)
 
 @Composable
 private fun LanguageRadioButton(
@@ -65,9 +78,7 @@ private fun LanguageRadioButton(
     onClick: (Language) -> Unit,
 ) {
     YuzuRadioOption(
-        modifier = modifier
-            .clickable { onClick(language) }
-            .padding(horizontal = 16.dp),
+        modifier = modifier,
         selected = selected,
         onClick = { onClick(language) },
     ) {

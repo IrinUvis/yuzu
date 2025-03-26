@@ -42,24 +42,44 @@ private fun DifficultyCheckboxGroup(
     selectedDifficulty: Set<GenerationDifficulty>,
     onClick: (GenerationDifficulty) -> Unit,
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(modifier = modifier) {
         DifficultyCheckbox(
+            modifier = Modifier.difficultyModifier(
+                difficulty = GenerationDifficulty.CommonlyUsed,
+                onClick = onClick,
+            ),
             difficulty = GenerationDifficulty.CommonlyUsed,
             checked = GenerationDifficulty.CommonlyUsed in selectedDifficulty,
             onClick = onClick,
         )
         DifficultyCheckbox(
+            modifier = Modifier.difficultyModifier(
+                difficulty = GenerationDifficulty.LessCommonlyUsed,
+                onClick = onClick,
+            ),
             difficulty = GenerationDifficulty.LessCommonlyUsed,
             checked = GenerationDifficulty.LessCommonlyUsed in selectedDifficulty,
             onClick = onClick,
         )
         DifficultyCheckbox(
+            modifier = Modifier.difficultyModifier(
+                difficulty = GenerationDifficulty.RarelyUsed,
+                onClick = onClick,
+            ),
             difficulty = GenerationDifficulty.RarelyUsed,
             checked = GenerationDifficulty.RarelyUsed in selectedDifficulty,
             onClick = onClick,
         )
     }
 }
+
+@Composable
+private fun Modifier.difficultyModifier(
+    difficulty: GenerationDifficulty,
+    onClick: (GenerationDifficulty) -> Unit,
+) = this
+    .clickable { onClick(difficulty) }
+    .padding(vertical = 4.dp, horizontal = 16.dp)
 
 @Composable
 private fun DifficultyCheckbox(
@@ -69,7 +89,7 @@ private fun DifficultyCheckbox(
     onClick: (GenerationDifficulty) -> Unit,
 ) {
     YuzuCheckboxOption(
-        modifier = modifier.clickable { onClick(difficulty) }.padding(horizontal = 16.dp),
+        modifier = modifier,
         checked = checked,
         onCheckedChange = { onClick(difficulty) },
     ) {
@@ -106,7 +126,6 @@ private fun subtitleForDifficulty(difficulty: GenerationDifficulty) = when (diff
 private fun DifficultyOptionsPreview() {
     YuzuPreview {
         DifficultyOptions(
-            modifier = Modifier.padding(4.dp),
             selectedDifficulty = setOf(GenerationDifficulty.CommonlyUsed, GenerationDifficulty.LessCommonlyUsed),
             onClick = {},
         )
