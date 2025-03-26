@@ -16,7 +16,7 @@ import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.ui.model.Language
 
 @Composable
-fun LanguageOptions(
+internal fun LanguageOptions(
     modifier: Modifier = Modifier,
     selectedLanguage: Language,
     onClick: (Language) -> Unit,

@@ -15,7 +15,7 @@ import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.ui.model.PartOfSpeech
 
 @Composable
-fun PartsOfSpeechOptions(
+internal fun PartsOfSpeechOptions(
     modifier: Modifier = Modifier,
     selectedPartsOfSpeech: Set<PartOfSpeech>,
     onClick: (PartOfSpeech) -> Unit,
@@ -96,7 +96,7 @@ private fun PartsOfSpeechOptionsPreview() {
     YuzuPreview {
         PartsOfSpeechOptions(
             modifier = Modifier.padding(4.dp),
-            selectedPartsOfSpeech = setOf(PartOfSpeech.Noun, PartOfSpeech.Verb, PartOfSpeech.Adjective),
+            selectedPartsOfSpeech = setOf(PartOfSpeech.Noun, PartOfSpeech.Verb),
             onClick = {},
         )
     }
