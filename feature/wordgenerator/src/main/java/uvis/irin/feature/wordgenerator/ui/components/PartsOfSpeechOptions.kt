@@ -1,5 +1,6 @@
 package uvis.irin.feature.wordgenerator.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -24,7 +25,10 @@ internal fun PartsOfSpeechOptions(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        SectionHeader(text = "Parts of speech")
+        SectionHeader(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "Parts of speech",
+        )
         PartsOfSpeechCheckboxGroup(
             selectedPartsOfSpeech = selectedPartsOfSpeech,
             onClick = onClick,
@@ -38,7 +42,10 @@ private fun PartsOfSpeechCheckboxGroup(
     selectedPartsOfSpeech: Set<PartOfSpeech>,
     onClick: (PartOfSpeech) -> Unit,
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
         PartOfSpeechCheckbox(
             partOfSpeech = PartOfSpeech.Noun,
             checked = PartOfSpeech.Noun in selectedPartsOfSpeech,
@@ -65,7 +72,7 @@ private fun PartOfSpeechCheckbox(
     onClick: (PartOfSpeech) -> Unit,
 ) {
     YuzuCheckboxOption(
-        modifier = modifier,
+        modifier = modifier.clickable { onClick(partOfSpeech) }.padding(horizontal = 16.dp),
         checked = checked,
         onCheckedChange = { onClick(partOfSpeech) },
     ) {
@@ -95,7 +102,6 @@ private fun subtitleForPartOfSpeech(partOfSpeech: PartOfSpeech) = when (partOfSp
 private fun PartsOfSpeechOptionsPreview() {
     YuzuPreview {
         PartsOfSpeechOptions(
-            modifier = Modifier.padding(4.dp),
             selectedPartsOfSpeech = setOf(PartOfSpeech.Noun, PartOfSpeech.Verb),
             onClick = {},
         )

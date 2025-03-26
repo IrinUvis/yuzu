@@ -4,19 +4,32 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import uvis.irin.core.designsystem.components.button.YuzuIconButton
+import uvis.irin.core.designsystem.components.divider.YuzuExpandableDivider
 import uvis.irin.core.designsystem.components.topbar.YuzuTopBar
 import uvis.irin.core.designsystem.icons.YuzuIcon
 import uvis.irin.core.designsystem.preview.YuzuPreview
+import uvis.irin.feature.wordgenerator.ui.components.DifficultyOptions
 import uvis.irin.feature.wordgenerator.ui.components.GenerateWordButton
 import uvis.irin.feature.wordgenerator.ui.components.GeneratedWordSection
+import uvis.irin.feature.wordgenerator.ui.components.LanguageOptions
+import uvis.irin.feature.wordgenerator.ui.components.PartsOfSpeechOptions
+import uvis.irin.feature.wordgenerator.ui.model.GenerationDifficulty
+import uvis.irin.feature.wordgenerator.ui.model.Language
+import uvis.irin.feature.wordgenerator.ui.model.PartOfSpeech
 
 @Composable
 fun WordGeneratorScreen(modifier: Modifier = Modifier) {
@@ -45,6 +58,7 @@ fun WordGeneratorScreen(modifier: Modifier = Modifier) {
 private fun WordGeneratorContent(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
             .padding(top = 8.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -57,22 +71,47 @@ private fun WordGeneratorContent(modifier: Modifier = Modifier) {
 @Composable
 private fun WordGeneratorActions(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = modifier.padding(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        GenerateWordButton(onClick = {})
-        GeneratedWordSection()
+        GenerateWordButton(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            onClick = {},
+        )
+        GeneratedWordSection(modifier = Modifier.padding(horizontal = 16.dp))
         WordGenerationSettings()
     }
 }
 
 @Composable
 private fun WordGenerationSettings(modifier: Modifier = Modifier) {
+    var isExpanded by remember { mutableStateOf(true) }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        YuzuExpandableDivider(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            label = "Configure word generation",
+            isExpanded = isExpanded,
+            onClick = { isExpanded = !isExpanded },
+        )
+        if (isExpanded) {
+            LanguageOptions(
+                selectedLanguage = Language.English,
+                onClick = { },
+            )
+            PartsOfSpeechOptions(
+                selectedPartsOfSpeech = setOf(PartOfSpeech.Noun, PartOfSpeech.Verb),
+                onClick = { },
+            )
+            DifficultyOptions(
+                selectedDifficulty = setOf(GenerationDifficulty.CommonlyUsed),
+                onClick = { },
+            )
+        }
     }
 }
 

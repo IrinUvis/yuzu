@@ -1,5 +1,6 @@
 package uvis.irin.feature.wordgenerator.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -25,7 +26,7 @@ internal fun LanguageOptions(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        SectionHeader(text = "Language")
+        SectionHeader(modifier = Modifier.padding(horizontal = 16.dp), text = "Language")
         LanguageOptionRadioGroup(
             selectedLanguage = selectedLanguage,
             onClick = onClick,
@@ -39,7 +40,10 @@ private fun LanguageOptionRadioGroup(
     selectedLanguage: Language,
     onClick: (Language) -> Unit,
 ) {
-    Column(modifier = modifier.selectableGroup()) {
+    Column(
+        modifier = modifier.selectableGroup(),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
         LanguageRadioButton(
             language = Language.English,
             selected = selectedLanguage == Language.English,
@@ -61,7 +65,9 @@ private fun LanguageRadioButton(
     onClick: (Language) -> Unit,
 ) {
     YuzuRadioOption(
-        modifier = modifier,
+        modifier = modifier
+            .clickable { onClick(language) }
+            .padding(horizontal = 16.dp),
         selected = selected,
         onClick = { onClick(language) },
     ) {
@@ -90,7 +96,6 @@ private fun subtitleForLanguage(language: Language) = when (language) {
 private fun LanguageOptionsPreview() {
     YuzuPreview {
         LanguageOptions(
-            modifier = Modifier.padding(4.dp),
             selectedLanguage = Language.English,
             onClick = {},
         )

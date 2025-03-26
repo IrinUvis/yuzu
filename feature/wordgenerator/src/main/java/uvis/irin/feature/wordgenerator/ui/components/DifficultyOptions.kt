@@ -1,5 +1,6 @@
 package uvis.irin.feature.wordgenerator.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -24,7 +25,10 @@ internal fun DifficultyOptions(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        SectionHeader(text = "Word difficulty")
+        SectionHeader(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "Word difficulty",
+        )
         DifficultyCheckboxGroup(
             selectedDifficulty = selectedDifficulty,
             onClick = onClick,
@@ -38,7 +42,7 @@ private fun DifficultyCheckboxGroup(
     selectedDifficulty: Set<GenerationDifficulty>,
     onClick: (GenerationDifficulty) -> Unit,
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         DifficultyCheckbox(
             difficulty = GenerationDifficulty.CommonlyUsed,
             checked = GenerationDifficulty.CommonlyUsed in selectedDifficulty,
@@ -65,7 +69,7 @@ private fun DifficultyCheckbox(
     onClick: (GenerationDifficulty) -> Unit,
 ) {
     YuzuCheckboxOption(
-        modifier = modifier,
+        modifier = modifier.clickable { onClick(difficulty) }.padding(horizontal = 16.dp),
         checked = checked,
         onCheckedChange = { onClick(difficulty) },
     ) {
