@@ -49,7 +49,6 @@ fun WordGeneratorScreen(
         modifier = modifier,
         wordGenerationState = wordGenerationState.value,
         onGenerateWordClick = viewModel::generateWord,
-        onCopyClick = viewModel::copyGeneratedWord,
         onExplainMeaningClick = viewModel::explainGeneratedWord,
     )
 }
@@ -59,7 +58,6 @@ private fun WordGeneratorScreenRoot(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
     onGenerateWordClick: () -> Unit,
-    onCopyClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
 ) {
     Scaffold(
@@ -83,7 +81,6 @@ private fun WordGeneratorScreenRoot(
             modifier = Modifier.padding(contentPadding),
             wordGenerationState = wordGenerationState,
             onGenerateWordClick = onGenerateWordClick,
-            onCopyClick = onCopyClick,
             onExplainMeaningClick = onExplainMeaningClick,
         )
     }
@@ -94,7 +91,6 @@ private fun WordGeneratorContent(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
     onGenerateWordClick: () -> Unit,
-    onCopyClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
 ) {
     Column(
@@ -108,7 +104,6 @@ private fun WordGeneratorContent(
         WordGeneratorActions(
             wordGenerationState = wordGenerationState,
             onGenerateWordClick = onGenerateWordClick,
-            onCopyClick = onCopyClick,
             onExplainMeaningClick = onExplainMeaningClick,
         )
         WordGenerationSettings()
@@ -120,7 +115,6 @@ private fun WordGeneratorActions(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
     onGenerateWordClick: () -> Unit,
-    onCopyClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
 ) {
     Column(
@@ -144,7 +138,6 @@ private fun WordGeneratorActions(
                 isWordGenerating = wordGenerationState.isWordGenerating,
                 generatedWordExplanation = wordGenerationState.generatedWordExplanation,
                 isExplanationGenerating = wordGenerationState.isExplanationGenerating,
-                onCopyClick = onCopyClick,
                 onExplainMeaningClick = onExplainMeaningClick,
             )
         }

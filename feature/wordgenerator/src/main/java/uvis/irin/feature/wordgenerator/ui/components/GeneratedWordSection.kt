@@ -1,5 +1,6 @@
 package uvis.irin.feature.wordgenerator.ui.components
 
+import android.content.ClipData
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ClipEntry
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -26,19 +29,24 @@ internal fun GeneratedWordSection(
     isWordGenerating: Boolean,
     generatedWordExplanation: String?,
     isExplanationGenerating: Boolean,
-    onCopyClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
 ) {
     Column(
         modifier = modifier.padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        val clipboardManager = LocalClipboardManager.current
+
         GeneratedWord(generatedWord = generatedWord)
         Spacer(modifier = Modifier.height(16.dp))
         GeneratedWordActions(
             isWordGenerating = isWordGenerating,
             isExplanationGenerating = isExplanationGenerating,
-            onCopyClick = onCopyClick,
+            onCopyClick = {
+                clipboardManager.setClip(
+                    ClipEntry(ClipData.newPlainText("Generated word", generatedWord)),
+                )
+            },
             onExplainMeaningClick = onExplainMeaningClick,
         )
         AnimatedNullableVisibility(generatedWordExplanation) { generatedWordExplanation ->
@@ -110,7 +118,6 @@ private fun GeneratedWordSectionPreview(
             isWordGenerating = spec.isWordGenerating,
             generatedWordExplanation = spec.generatedWordExplanation,
             isExplanationGenerating = spec.isExplanationGenerating,
-            onCopyClick = {},
             onExplainMeaningClick = {},
         )
     }

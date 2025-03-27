@@ -34,8 +34,6 @@ class WordGeneratorViewModel(
         }
     }
 
-    fun copyGeneratedWord() = Unit
-
     fun explainGeneratedWord() {
         viewModelScope.launch {
             _wordGenerationState.update { it.copy(isExplanationGenerating = true) }
