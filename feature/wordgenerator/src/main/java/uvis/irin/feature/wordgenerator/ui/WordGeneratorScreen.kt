@@ -111,6 +111,7 @@ private fun WordGeneratorContent(
             onCopyClick = onCopyClick,
             onExplainMeaningClick = onExplainMeaningClick,
         )
+        WordGenerationSettings()
     }
 }
 
@@ -124,12 +125,12 @@ private fun WordGeneratorActions(
 ) {
     Column(
         modifier = modifier.padding(vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         GenerateWordButton(
             modifier = Modifier.padding(horizontal = 16.dp),
             isWordGenerating = wordGenerationState.isWordGenerating,
+            isExplanationGenerating = wordGenerationState.isExplanationGenerating,
             onClick = onGenerateWordClick,
         )
         AnimatedNullableVisibility(
@@ -138,16 +139,15 @@ private fun WordGeneratorActions(
             exitTransition = fadeOut() + shrinkVertically(),
         ) { generatedWord ->
             GeneratedWordSection(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
                 generatedWord = generatedWord,
-                generatedWordExplanation = wordGenerationState.generatedWordDescription,
-                isExplanationGenerating = wordGenerationState.isDescriptionGenerating,
+                isWordGenerating = wordGenerationState.isWordGenerating,
+                generatedWordExplanation = wordGenerationState.generatedWordExplanation,
+                isExplanationGenerating = wordGenerationState.isExplanationGenerating,
                 onCopyClick = onCopyClick,
                 onExplainMeaningClick = onExplainMeaningClick,
             )
         }
-
-        WordGenerationSettings()
     }
 }
 

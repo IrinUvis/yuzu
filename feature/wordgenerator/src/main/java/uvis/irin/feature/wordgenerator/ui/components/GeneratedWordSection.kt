@@ -3,6 +3,8 @@ package uvis.irin.feature.wordgenerator.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,6 +23,7 @@ import uvis.irin.core.designsystem.preview.YuzuPreview
 internal fun GeneratedWordSection(
     modifier: Modifier = Modifier,
     generatedWord: String,
+    isWordGenerating: Boolean,
     generatedWordExplanation: String?,
     isExplanationGenerating: Boolean,
     onCopyClick: () -> Unit,
@@ -28,17 +31,21 @@ internal fun GeneratedWordSection(
 ) {
     Column(
         modifier = modifier.padding(vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         GeneratedWord(generatedWord = generatedWord)
+        Spacer(modifier = Modifier.height(16.dp))
         GeneratedWordActions(
+            isWordGenerating = isWordGenerating,
             isExplanationGenerating = isExplanationGenerating,
             onCopyClick = onCopyClick,
             onExplainMeaningClick = onExplainMeaningClick,
         )
         AnimatedNullableVisibility(generatedWordExplanation) { generatedWordExplanation ->
-            GeneratedWordExplanation(explanation = generatedWordExplanation)
+            GeneratedWordExplanation(
+                modifier = Modifier.padding(top = 16.dp),
+                explanation = generatedWordExplanation,
+            )
         }
     }
 }
@@ -58,6 +65,7 @@ private fun GeneratedWord(
 @Composable
 private fun GeneratedWordActions(
     modifier: Modifier = Modifier,
+    isWordGenerating: Boolean,
     isExplanationGenerating: Boolean,
     onCopyClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
@@ -68,7 +76,8 @@ private fun GeneratedWordActions(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CopyWordButton(onClick = onCopyClick)
-        ExplainWordIcon(
+        ExplainWordButton(
+            isWordGenerating = isWordGenerating,
             isExplanationGenerating = isExplanationGenerating,
             onClick = onExplainMeaningClick,
         )
@@ -98,6 +107,7 @@ private fun GeneratedWordSectionPreview(
     YuzuPreview {
         GeneratedWordSection(
             generatedWord = spec.generatedWord,
+            isWordGenerating = spec.isWordGenerating,
             generatedWordExplanation = spec.generatedWordExplanation,
             isExplanationGenerating = spec.isExplanationGenerating,
             onCopyClick = {},
@@ -111,21 +121,49 @@ class GeneratedWordSectionPreviewParameterProvider :
     override val values: Sequence<GeneratedWordSectionPreviewSpec> = sequenceOf(
         GeneratedWordSectionPreviewSpec(
             generatedWord = "word",
+            isWordGenerating = false,
             generatedWordExplanation = null,
             isExplanationGenerating = false,
         ),
         GeneratedWordSectionPreviewSpec(
             generatedWord = "word",
+            isWordGenerating = false,
             generatedWordExplanation = null,
             isExplanationGenerating = true,
         ),
         GeneratedWordSectionPreviewSpec(
             generatedWord = "word",
+            isWordGenerating = false,
             generatedWordExplanation = "explanation",
             isExplanationGenerating = false,
         ),
         GeneratedWordSectionPreviewSpec(
             generatedWord = "word",
+            isWordGenerating = false,
+            generatedWordExplanation = "explanation",
+            isExplanationGenerating = true,
+        ),
+        GeneratedWordSectionPreviewSpec(
+            generatedWord = "word",
+            isWordGenerating = true,
+            generatedWordExplanation = null,
+            isExplanationGenerating = false,
+        ),
+        GeneratedWordSectionPreviewSpec(
+            generatedWord = "word",
+            isWordGenerating = true,
+            generatedWordExplanation = null,
+            isExplanationGenerating = true,
+        ),
+        GeneratedWordSectionPreviewSpec(
+            generatedWord = "word",
+            isWordGenerating = true,
+            generatedWordExplanation = "explanation",
+            isExplanationGenerating = false,
+        ),
+        GeneratedWordSectionPreviewSpec(
+            generatedWord = "word",
+            isWordGenerating = true,
             generatedWordExplanation = "explanation",
             isExplanationGenerating = true,
         ),
@@ -133,6 +171,7 @@ class GeneratedWordSectionPreviewParameterProvider :
 
     data class GeneratedWordSectionPreviewSpec(
         val generatedWord: String,
+        val isWordGenerating: Boolean,
         val generatedWordExplanation: String?,
         val isExplanationGenerating: Boolean,
     )
