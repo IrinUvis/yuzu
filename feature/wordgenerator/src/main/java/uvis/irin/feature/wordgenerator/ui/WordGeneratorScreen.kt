@@ -1,11 +1,16 @@
 package uvis.irin.feature.wordgenerator.ui
 
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import uvis.irin.core.designsystem.components.button.YuzuIconButton
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.compose.viewmodel.koinViewModel
+import uvis.irin.core.designsystem.components.animation.AnimatedNullableVisibility
 import uvis.irin.core.designsystem.components.divider.YuzuExpandableDivider
 import uvis.irin.core.designsystem.components.topbar.YuzuTopBar
 import uvis.irin.core.designsystem.icons.YuzuIcon
@@ -32,7 +39,29 @@ import uvis.irin.feature.wordgenerator.ui.model.Language
 import uvis.irin.feature.wordgenerator.ui.model.PartOfSpeech
 
 @Composable
-fun WordGeneratorScreen(modifier: Modifier = Modifier) {
+fun WordGeneratorScreen(
+    modifier: Modifier = Modifier,
+    viewModel: WordGeneratorViewModel = koinViewModel(),
+) {
+    val wordGenerationState = viewModel.wordGenerationState.collectAsStateWithLifecycle()
+
+    WordGeneratorScreenRoot(
+        modifier = modifier,
+        wordGenerationState = wordGenerationState.value,
+        onGenerateWordClick = viewModel::generateWord,
+        onCopyClick = viewModel::copyGeneratedWord,
+        onExplainMeaningClick = viewModel::explainGeneratedWord,
+    )
+}
+
+@Composable
+private fun WordGeneratorScreenRoot(
+    modifier: Modifier = Modifier,
+    wordGenerationState: WordGenerationState,
+    onGenerateWordClick: () -> Unit,
+    onCopyClick: () -> Unit,
+    onExplainMeaningClick: () -> Unit,
+) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -40,9 +69,9 @@ fun WordGeneratorScreen(modifier: Modifier = Modifier) {
                 title = "Word generator",
                 onNavigationIconClick = { },
                 actions = {
-                    YuzuIconButton(
+                    IconButton(
                         modifier = modifier,
-                        onClick = { },
+                        onClick = {},
                     ) {
                         YuzuIcon(icon = YuzuIcon.Help)
                     }
@@ -50,12 +79,24 @@ fun WordGeneratorScreen(modifier: Modifier = Modifier) {
             )
         },
     ) { contentPadding ->
-        WordGeneratorContent(modifier = Modifier.padding(contentPadding))
+        WordGeneratorContent(
+            modifier = Modifier.padding(contentPadding),
+            wordGenerationState = wordGenerationState,
+            onGenerateWordClick = onGenerateWordClick,
+            onCopyClick = onCopyClick,
+            onExplainMeaningClick = onExplainMeaningClick,
+        )
     }
 }
 
 @Composable
-private fun WordGeneratorContent(modifier: Modifier = Modifier) {
+private fun WordGeneratorContent(
+    modifier: Modifier = Modifier,
+    wordGenerationState: WordGenerationState,
+    onGenerateWordClick: () -> Unit,
+    onCopyClick: () -> Unit,
+    onExplainMeaningClick: () -> Unit,
+) {
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -64,12 +105,23 @@ private fun WordGeneratorContent(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        WordGeneratorActions()
+        WordGeneratorActions(
+            wordGenerationState = wordGenerationState,
+            onGenerateWordClick = onGenerateWordClick,
+            onCopyClick = onCopyClick,
+            onExplainMeaningClick = onExplainMeaningClick,
+        )
     }
 }
 
 @Composable
-private fun WordGeneratorActions(modifier: Modifier = Modifier) {
+private fun WordGeneratorActions(
+    modifier: Modifier = Modifier,
+    wordGenerationState: WordGenerationState,
+    onGenerateWordClick: () -> Unit,
+    onCopyClick: () -> Unit,
+    onExplainMeaningClick: () -> Unit,
+) {
     Column(
         modifier = modifier.padding(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -77,9 +129,24 @@ private fun WordGeneratorActions(modifier: Modifier = Modifier) {
     ) {
         GenerateWordButton(
             modifier = Modifier.padding(horizontal = 16.dp),
-            onClick = {},
+            isWordGenerating = wordGenerationState.isWordGenerating,
+            onClick = onGenerateWordClick,
         )
-        GeneratedWordSection(modifier = Modifier.padding(horizontal = 16.dp))
+        AnimatedNullableVisibility(
+            value = wordGenerationState.generatedWord,
+            enterTransition = fadeIn() + expandVertically(),
+            exitTransition = fadeOut() + shrinkVertically(),
+        ) { generatedWord ->
+            GeneratedWordSection(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                generatedWord = generatedWord,
+                generatedWordExplanation = wordGenerationState.generatedWord,
+                isExplanationGenerating = wordGenerationState.isDescriptionGenerating,
+                onCopyClick = onCopyClick,
+                onExplainMeaningClick = onExplainMeaningClick,
+            )
+        }
+
         WordGenerationSettings()
     }
 }
