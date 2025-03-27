@@ -140,7 +140,7 @@ private fun WordGeneratorActions(
             GeneratedWordSection(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 generatedWord = generatedWord,
-                generatedWordExplanation = wordGenerationState.generatedWord,
+                generatedWordExplanation = wordGenerationState.generatedWordDescription,
                 isExplanationGenerating = wordGenerationState.isDescriptionGenerating,
                 onCopyClick = onCopyClick,
                 onExplainMeaningClick = onExplainMeaningClick,
