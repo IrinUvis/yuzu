@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -14,6 +15,7 @@ import uvis.irin.core.designsystem.components.radio.YuzuRadioOption
 import uvis.irin.core.designsystem.components.section.SectionHeader
 import uvis.irin.core.designsystem.components.text.HeaderWithSubtitle
 import uvis.irin.core.designsystem.preview.YuzuPreview
+import uvis.irin.feature.wordgenerator.R
 import uvis.irin.feature.wordgenerator.ui.model.Language
 
 @Composable
@@ -26,7 +28,10 @@ internal fun LanguageOptions(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        SectionHeader(modifier = Modifier.padding(horizontal = 16.dp), text = "Language")
+        SectionHeader(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = stringResource(R.string.language_options_header),
+        )
         LanguageOptionRadioGroup(
             selectedLanguage = selectedLanguage,
             onClick = onClick,
@@ -91,14 +96,14 @@ private fun LanguageRadioButton(
 
 @Composable
 private fun headerForLanguage(language: Language) = when (language) {
-    Language.English -> "English"
-    Language.Polish -> "Polish"
+    Language.English -> stringResource(R.string.english_language_header)
+    Language.Polish -> stringResource(R.string.polish_language_header)
 }
 
 @Composable
 private fun subtitleForLanguage(language: Language) = when (language) {
-    Language.English -> "Generate words in English language"
-    Language.Polish -> "Generate words in Polish language"
+    Language.English -> stringResource(R.string.english_language_subtitle)
+    Language.Polish -> stringResource(R.string.polish_language_subtitle)
 }
 
 @PreviewDynamicColors

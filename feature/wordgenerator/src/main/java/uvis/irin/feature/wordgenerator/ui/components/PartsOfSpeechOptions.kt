@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -13,6 +14,7 @@ import uvis.irin.core.designsystem.components.checkbox.YuzuCheckboxOption
 import uvis.irin.core.designsystem.components.section.SectionHeader
 import uvis.irin.core.designsystem.components.text.HeaderWithSubtitle
 import uvis.irin.core.designsystem.preview.YuzuPreview
+import uvis.irin.feature.wordgenerator.R
 import uvis.irin.feature.wordgenerator.ui.model.PartOfSpeech
 
 @Composable
@@ -27,7 +29,7 @@ internal fun PartsOfSpeechOptions(
     ) {
         SectionHeader(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = "Parts of speech",
+            text = stringResource(R.string.parts_of_speech_settings_header),
         )
         PartsOfSpeechCheckboxGroup(
             selectedPartsOfSpeech = selectedPartsOfSpeech,
@@ -102,14 +104,14 @@ private fun PartOfSpeechCheckbox(
 
 @Composable
 private fun headerForPartOfSpeech(partOfSpeech: PartOfSpeech) = when (partOfSpeech) {
-    PartOfSpeech.Noun -> "Nouns"
-    PartOfSpeech.Verb -> "Verbs"
-    PartOfSpeech.Adjective -> "Adjectives"
+    PartOfSpeech.Noun -> stringResource(R.string.noun_part_of_speech_header)
+    PartOfSpeech.Verb -> stringResource(R.string.verb_part_of_speech_header)
+    PartOfSpeech.Adjective -> stringResource(R.string.adjective_part_of_speech_header)
 }
 
 @Composable
 private fun subtitleForPartOfSpeech(partOfSpeech: PartOfSpeech) = when (partOfSpeech) {
-    PartOfSpeech.Verb -> "Verb in infinite form"
+    PartOfSpeech.Verb -> stringResource(R.string.verb_part_of_speech_subtitle)
     else -> null
 }
 

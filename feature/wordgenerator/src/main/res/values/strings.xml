@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="copy_word_button_label">Copy</string>
+    <string name="word_difficulty_settings_header">Word difficulty</string>
+    <string name="commonly_used_difficulty_header">Commonly used</string>
+    <string name="less_commonly_used_difficulty_header">Less commonly used</string>
+    <string name="rarely_used_difficulty_header">Rarely used</string>
+    <string name="commonly_used_difficulty_subtitle">Generate words that are used relatively commonly used.\nExamples: chair, idea, freedom, building, street</string>
+    <string name="less_commonly_used_difficulty_subtitle">Generate words that are commonly known but less commonly used.\nExamples: accommodation, oxygen, dilemma, nostalgia, aroma</string>
+    <string name="rarely_used_difficulty_subtitle">Generate difficult and rarely used words.\nExamples: apotheosis, kaleidoscope, paucity, impute, assemble</string>
+    <string name="explain_meaning_button_label">Explain meaning</string>
+    <string name="generate_word_button_label">Generate a word</string>
+    <string name="word_generator_top_bar_title">Word generator</string>
+    <string name="configure_word_generation_settings_header">Configure word generation</string>
+    <string name="language_options_header">Language</string>
+    <string name="english_language_header">English</string>
+    <string name="polish_language_header">Polish</string>
+    <string name="english_language_subtitle">Generate words in English language</string>
+    <string name="polish_language_subtitle">Generate words in Polish language</string>
+    <string name="parts_of_speech_settings_header">Parts of speech</string>
+    <string name="verb_part_of_speech_subtitle">Verb in infinite form</string>
+    <string name="noun_part_of_speech_header">Nouns</string>
+    <string name="verb_part_of_speech_header">Verbs</string>
+    <string name="adjective_part_of_speech_header">Adjectives</string>
+</resources>

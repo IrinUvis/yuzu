@@ -9,6 +9,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -16,6 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import uvis.irin.core.designsystem.icons.YuzuIcon
 import uvis.irin.core.designsystem.preview.YuzuPreview
+import uvis.irin.feature.wordgenerator.R
 
 @Composable
 internal fun GenerateWordButton(
@@ -40,7 +42,7 @@ internal fun GenerateWordButton(
             }
         }
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-        Text(text = "Generate a word")
+        Text(text = stringResource(R.string.generate_word_button_label))
     }
 }
 

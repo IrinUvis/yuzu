@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -13,6 +14,7 @@ import uvis.irin.core.designsystem.components.checkbox.YuzuCheckboxOption
 import uvis.irin.core.designsystem.components.section.SectionHeader
 import uvis.irin.core.designsystem.components.text.HeaderWithSubtitle
 import uvis.irin.core.designsystem.preview.YuzuPreview
+import uvis.irin.feature.wordgenerator.R
 import uvis.irin.feature.wordgenerator.ui.model.GenerationDifficulty
 
 @Composable
@@ -27,7 +29,7 @@ internal fun DifficultyOptions(
     ) {
         SectionHeader(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = "Word difficulty",
+            text = stringResource(R.string.word_difficulty_settings_header),
         )
         DifficultyCheckboxGroup(
             selectedDifficulty = selectedDifficulty,
@@ -102,22 +104,16 @@ private fun DifficultyCheckbox(
 
 @Composable
 private fun headerForDifficulty(difficulty: GenerationDifficulty) = when (difficulty) {
-    GenerationDifficulty.CommonlyUsed -> "Commonly used"
-    GenerationDifficulty.LessCommonlyUsed -> "Less commonly used"
-    GenerationDifficulty.RarelyUsed -> "Rarely used"
+    GenerationDifficulty.CommonlyUsed -> stringResource(R.string.commonly_used_difficulty_header)
+    GenerationDifficulty.LessCommonlyUsed -> stringResource(R.string.less_commonly_used_difficulty_header)
+    GenerationDifficulty.RarelyUsed -> stringResource(R.string.rarely_used_difficulty_header)
 }
 
 @Composable
 private fun subtitleForDifficulty(difficulty: GenerationDifficulty) = when (difficulty) {
-    GenerationDifficulty.CommonlyUsed ->
-        "Generate words that are used relatively commonly used.\n" +
-            "Examples: chair, idea, freedom, building, street"
-    GenerationDifficulty.LessCommonlyUsed ->
-        "Generate words that are commonly known but less commonly used.\n" +
-            "Examples: accommodation, oxygen, dilemma, nostalgia, aroma"
-    GenerationDifficulty.RarelyUsed ->
-        "Generate difficult and rarely used words.\n" +
-            "Examples: apotheosis, kaleidoscope, paucity, impute, assemble"
+    GenerationDifficulty.CommonlyUsed -> stringResource(R.string.commonly_used_difficulty_subtitle)
+    GenerationDifficulty.LessCommonlyUsed -> stringResource(R.string.less_commonly_used_difficulty_subtitle)
+    GenerationDifficulty.RarelyUsed -> stringResource(R.string.rarely_used_difficulty_subtitle)
 }
 
 @PreviewDynamicColors

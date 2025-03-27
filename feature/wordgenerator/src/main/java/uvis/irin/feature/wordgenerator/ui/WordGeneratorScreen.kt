@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,7 @@ import uvis.irin.core.designsystem.components.divider.YuzuExpandableDivider
 import uvis.irin.core.designsystem.components.topbar.YuzuTopBar
 import uvis.irin.core.designsystem.icons.YuzuIcon
 import uvis.irin.core.designsystem.preview.YuzuPreview
+import uvis.irin.feature.wordgenerator.R
 import uvis.irin.feature.wordgenerator.ui.components.DifficultyOptions
 import uvis.irin.feature.wordgenerator.ui.components.GenerateWordButton
 import uvis.irin.feature.wordgenerator.ui.components.GeneratedWordSection
@@ -64,7 +66,7 @@ private fun WordGeneratorScreenRoot(
         modifier = modifier,
         topBar = {
             YuzuTopBar(
-                title = "Word generator",
+                title = stringResource(R.string.word_generator_top_bar_title),
                 onNavigationIconClick = { },
                 actions = {
                     IconButton(
@@ -153,7 +155,7 @@ private fun WordGenerationSettings(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         YuzuExpandableDivider(
-            label = "Configure word generation",
+            label = stringResource(R.string.configure_word_generation_settings_header),
             isExpanded = isExpanded,
             onClick = { isExpanded = !isExpanded },
         )
