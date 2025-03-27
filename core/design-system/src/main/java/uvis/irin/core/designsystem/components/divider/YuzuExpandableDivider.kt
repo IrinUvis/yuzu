@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.IconButton
@@ -25,12 +26,13 @@ import uvis.irin.core.designsystem.preview.YuzuPreview
 @Composable
 fun YuzuExpandableDivider(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
     label: String,
     onClick: () -> Unit,
     isExpanded: Boolean,
 ) {
     Column(
-        modifier = modifier.clickable(onClick = onClick),
+        modifier = modifier.clickable(onClick = onClick).padding(contentPadding),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.Start,
     ) {
@@ -88,7 +90,7 @@ private fun ExpandIcon(
         onClick = onClick,
     ) {
         YuzuIcon(
-            modifier = modifier.graphicsLayer { rotationX = iconRotation },
+            modifier = modifier.graphicsLayer { rotationZ = iconRotation },
             icon = YuzuIcon.ExpandMore,
         )
     }

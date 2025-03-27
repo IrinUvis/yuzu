@@ -93,7 +93,6 @@ private fun WordGenerationSettings(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         YuzuExpandableDivider(
-            modifier = Modifier.padding(horizontal = 16.dp),
             label = "Configure word generation",
             isExpanded = isExpanded,
             onClick = { isExpanded = !isExpanded },
