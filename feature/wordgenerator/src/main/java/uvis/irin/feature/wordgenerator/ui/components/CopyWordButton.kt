@@ -7,7 +7,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewDynamicColors
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import uvis.irin.core.designsystem.icons.YuzuIcon
+import uvis.irin.core.designsystem.preview.YuzuPreview
 
 @Composable
 internal fun CopyWordButton(
@@ -21,5 +24,14 @@ internal fun CopyWordButton(
         YuzuIcon(icon = YuzuIcon.ContentCopy)
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
         Text(text = "Copy")
+    }
+}
+
+@PreviewDynamicColors
+@PreviewLightDark
+@Composable
+private fun CopyWordButtonPreview() {
+    YuzuPreview {
+        CopyWordButton(onClick = {})
     }
 }
