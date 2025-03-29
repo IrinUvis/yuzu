@@ -22,4 +22,7 @@
     <string name="noun_part_of_speech_header">Nouns</string>
     <string name="verb_part_of_speech_header">Verbs</string>
     <string name="adjective_part_of_speech_header">Adjectives</string>
+    <string name="word_generator_help_description_1">This tool allows you to generate words for various purposes.</string>
+    <string name="word_generator_help_description_2">In the word generation configuration section you can customize the generation of words and toggle various settings such as generated word language or difficulty.\nThis tool allows generation of words for various purposes.</string>
+    <string name="word_generator_help_title">Word generator</string>
 </resources>

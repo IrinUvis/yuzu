@@ -23,12 +23,14 @@ class WordGeneratorViewModel(
     private val _wordGeneration = MutableStateFlow(Generation())
     private val _explanationGeneration = MutableStateFlow(Generation())
     private val _generationSettings = MutableStateFlow(GenerationSettings())
+    private val _helpVisible = MutableStateFlow(false)
 
     val uiState: StateFlow<WordGeneratorUiState> = combine(
         _wordGeneration,
         _explanationGeneration,
         _generationSettings,
-    ) { wordGeneration, explanationGeneration, generationSettings ->
+        _helpVisible,
+    ) { wordGeneration, explanationGeneration, generationSettings, helpVisible ->
         val areSettingsValid = generationSettings.selectedPartsOfSpeech.isNotEmpty() &&
             generationSettings.selectedDifficulties.isNotEmpty()
         val isWordOrExplanationGenerating = wordGeneration.isGenerating || explanationGeneration.isGenerating
@@ -38,12 +40,21 @@ class WordGeneratorViewModel(
             wordExplanationGeneration = explanationGeneration,
             wordGenerationAvailable = areSettingsValid && !isWordOrExplanationGenerating,
             generationSettings = generationSettings,
+            helpVisible = helpVisible,
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
         initialValue = WordGeneratorUiState(),
     )
+
+    fun openHelpSheet() {
+        _helpVisible.update { true }
+    }
+
+    fun hideHelpSheet() {
+        _helpVisible.update { false }
+    }
 
     fun generateWord() {
         viewModelScope.launch {
@@ -108,6 +119,7 @@ data class WordGeneratorUiState(
     val wordExplanationGeneration: Generation = Generation(),
     val wordGenerationAvailable: Boolean = false,
     val generationSettings: GenerationSettings = GenerationSettings(),
+    val helpVisible: Boolean = false,
 )
 
 data class Generation(

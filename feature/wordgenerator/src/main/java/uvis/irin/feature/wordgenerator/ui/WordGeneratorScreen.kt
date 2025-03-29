@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,6 +33,7 @@ import uvis.irin.feature.wordgenerator.R
 import uvis.irin.feature.wordgenerator.ui.components.DifficultyOptions
 import uvis.irin.feature.wordgenerator.ui.components.GenerateWordButton
 import uvis.irin.feature.wordgenerator.ui.components.GeneratedWordSection
+import uvis.irin.feature.wordgenerator.ui.components.HelpBottomSheetContent
 import uvis.irin.feature.wordgenerator.ui.components.LanguageOptions
 import uvis.irin.feature.wordgenerator.ui.components.PartsOfSpeechOptions
 import uvis.irin.feature.wordgenerator.ui.model.GenerationDifficulty
@@ -47,6 +50,8 @@ fun WordGeneratorScreen(
     WordGeneratorScreenRoot(
         modifier = modifier,
         wordGeneratorUiState = uiState.value,
+        onHelpClick = viewModel::openHelpSheet,
+        onHelpSheetDismissed = viewModel::hideHelpSheet,
         onGenerateWordClick = viewModel::generateWord,
         onExplainMeaningClick = viewModel::explainGeneratedWord,
         onSettingsHeaderClick = viewModel::toggleSettingsExpanded,
@@ -56,10 +61,13 @@ fun WordGeneratorScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun WordGeneratorScreenRoot(
     modifier: Modifier = Modifier,
     wordGeneratorUiState: WordGeneratorUiState,
+    onHelpClick: () -> Unit,
+    onHelpSheetDismissed: () -> Unit,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
     onSettingsHeaderClick: () -> Unit,
@@ -70,17 +78,9 @@ private fun WordGeneratorScreenRoot(
     Scaffold(
         modifier = modifier,
         topBar = {
-            YuzuTopBar(
-                title = stringResource(R.string.word_generator_top_bar_title),
-                onNavigationIconClick = { },
-                actions = {
-                    IconButton(
-                        modifier = modifier,
-                        onClick = {},
-                    ) {
-                        YuzuIcon(icon = YuzuIcon.Help)
-                    }
-                },
+            WordGeneratorTopBar(
+                onNavigationIconClick = {},
+                onHelpClick = onHelpClick,
             )
         },
     ) { contentPadding ->
@@ -94,7 +94,35 @@ private fun WordGeneratorScreenRoot(
             onPartOfSpeechClick = onPartOfSpeechClick,
             onGenerationDifficultyClick = onGenerationDifficultyClick,
         )
+        if (wordGeneratorUiState.helpVisible) {
+            ModalBottomSheet(onDismissRequest = onHelpSheetDismissed) {
+                HelpBottomSheetContent(
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                )
+            }
+        }
     }
+}
+
+@Composable
+private fun WordGeneratorTopBar(
+    modifier: Modifier = Modifier,
+    onNavigationIconClick: () -> Unit,
+    onHelpClick: () -> Unit,
+) {
+    YuzuTopBar(
+        modifier = modifier,
+        title = stringResource(R.string.word_generator_top_bar_title),
+        onNavigationIconClick = onNavigationIconClick,
+        actions = {
+            IconButton(
+                modifier = modifier,
+                onClick = onHelpClick,
+            ) {
+                YuzuIcon(icon = YuzuIcon.Help)
+            }
+        },
+    )
 }
 
 @Composable
