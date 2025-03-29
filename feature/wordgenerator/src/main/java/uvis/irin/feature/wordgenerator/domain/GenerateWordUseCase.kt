@@ -5,7 +5,7 @@ import kotlin.time.Duration.Companion.seconds
 
 internal class GenerateWordUseCaseImpl : GenerateWordUseCase {
     override suspend fun invoke(): Result<String> {
-        delay(3.seconds)
+        delay(1.seconds)
         return Result.success("cockroach")
     }
 }
