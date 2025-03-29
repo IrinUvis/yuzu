@@ -20,7 +20,7 @@ import uvis.irin.feature.wordgenerator.ui.model.GenerationDifficulty
 @Composable
 internal fun DifficultyOptions(
     modifier: Modifier = Modifier,
-    selectedDifficulty: Set<GenerationDifficulty>,
+    selectedDifficulties: Set<GenerationDifficulty>,
     onClick: (GenerationDifficulty) -> Unit,
 ) {
     Column(
@@ -32,7 +32,7 @@ internal fun DifficultyOptions(
             text = stringResource(R.string.word_difficulty_settings_header),
         )
         DifficultyCheckboxGroup(
-            selectedDifficulty = selectedDifficulty,
+            selectedDifficulty = selectedDifficulties,
             onClick = onClick,
         )
     }
@@ -122,7 +122,7 @@ private fun subtitleForDifficulty(difficulty: GenerationDifficulty) = when (diff
 private fun DifficultyOptionsPreview() {
     YuzuPreview {
         DifficultyOptions(
-            selectedDifficulty = setOf(GenerationDifficulty.CommonlyUsed, GenerationDifficulty.LessCommonlyUsed),
+            selectedDifficulties = setOf(GenerationDifficulty.CommonlyUsed, GenerationDifficulty.LessCommonlyUsed),
             onClick = {},
         )
     }

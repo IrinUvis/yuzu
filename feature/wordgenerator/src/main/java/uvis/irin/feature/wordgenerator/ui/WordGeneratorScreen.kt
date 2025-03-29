@@ -1,5 +1,6 @@
 package uvis.irin.feature.wordgenerator.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -13,10 +14,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -46,12 +43,18 @@ fun WordGeneratorScreen(
     viewModel: WordGeneratorViewModel = koinViewModel(),
 ) {
     val wordGenerationState = viewModel.wordGenerationState.collectAsStateWithLifecycle()
+    val generationSettingsState = viewModel.generationSettingsState.collectAsStateWithLifecycle()
 
     WordGeneratorScreenRoot(
         modifier = modifier,
         wordGenerationState = wordGenerationState.value,
+        generationSettingsState = generationSettingsState.value,
         onGenerateWordClick = viewModel::generateWord,
         onExplainMeaningClick = viewModel::explainGeneratedWord,
+        onSettingsHeaderClick = viewModel::toggleSettingsExpanded,
+        onLanguageClick = viewModel::toggleLanguageSetting,
+        onPartOfSpeechClick = viewModel::togglePartOfSpeechSetting,
+        onGenerationDifficultyClick = viewModel::toggleGenerationDifficultySetting,
     )
 }
 
@@ -59,8 +62,13 @@ fun WordGeneratorScreen(
 private fun WordGeneratorScreenRoot(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
+    generationSettingsState: GenerationSettingsState,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
+    onSettingsHeaderClick: () -> Unit,
+    onLanguageClick: (Language) -> Unit,
+    onPartOfSpeechClick: (PartOfSpeech) -> Unit,
+    onGenerationDifficultyClick: (GenerationDifficulty) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -82,8 +90,13 @@ private fun WordGeneratorScreenRoot(
         WordGeneratorContent(
             modifier = Modifier.padding(contentPadding),
             wordGenerationState = wordGenerationState,
+            generationSettingsState = generationSettingsState,
             onGenerateWordClick = onGenerateWordClick,
             onExplainMeaningClick = onExplainMeaningClick,
+            onSettingsHeaderClick = onSettingsHeaderClick,
+            onLanguageClick = onLanguageClick,
+            onPartOfSpeechClick = onPartOfSpeechClick,
+            onGenerationDifficultyClick = onGenerationDifficultyClick,
         )
     }
 }
@@ -92,8 +105,13 @@ private fun WordGeneratorScreenRoot(
 private fun WordGeneratorContent(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
+    generationSettingsState: GenerationSettingsState,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
+    onSettingsHeaderClick: () -> Unit,
+    onLanguageClick: (Language) -> Unit,
+    onPartOfSpeechClick: (PartOfSpeech) -> Unit,
+    onGenerationDifficultyClick: (GenerationDifficulty) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -108,7 +126,13 @@ private fun WordGeneratorContent(
             onGenerateWordClick = onGenerateWordClick,
             onExplainMeaningClick = onExplainMeaningClick,
         )
-        WordGenerationSettings()
+        WordGenerationSettings(
+            generationSettingsState = generationSettingsState,
+            onSettingsHeaderClick = onSettingsHeaderClick,
+            onLanguageClick = onLanguageClick,
+            onPartOfSpeechClick = onPartOfSpeechClick,
+            onGenerationDifficultyClick = onGenerationDifficultyClick,
+        )
     }
 }
 
@@ -147,31 +171,41 @@ private fun WordGeneratorActions(
 }
 
 @Composable
-private fun WordGenerationSettings(modifier: Modifier = Modifier) {
-    var isExpanded by remember { mutableStateOf(true) }
-
+private fun WordGenerationSettings(
+    modifier: Modifier = Modifier,
+    generationSettingsState: GenerationSettingsState,
+    onSettingsHeaderClick: () -> Unit,
+    onLanguageClick: (Language) -> Unit,
+    onPartOfSpeechClick: (PartOfSpeech) -> Unit,
+    onGenerationDifficultyClick: (GenerationDifficulty) -> Unit,
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         YuzuExpandableDivider(
             label = stringResource(R.string.configure_word_generation_settings_header),
-            isExpanded = isExpanded,
-            onClick = { isExpanded = !isExpanded },
+            isExpanded = generationSettingsState.isSettingsExpanded,
+            onClick = onSettingsHeaderClick,
         )
-        if (isExpanded) {
-            LanguageOptions(
-                selectedLanguage = Language.English,
-                onClick = { },
-            )
-            PartsOfSpeechOptions(
-                selectedPartsOfSpeech = setOf(PartOfSpeech.Noun, PartOfSpeech.Verb),
-                onClick = { },
-            )
-            DifficultyOptions(
-                selectedDifficulty = setOf(GenerationDifficulty.CommonlyUsed),
-                onClick = { },
-            )
+        AnimatedVisibility(generationSettingsState.isSettingsExpanded) {
+            Column(
+                modifier = modifier,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                LanguageOptions(
+                    selectedLanguage = generationSettingsState.selectedLanguage,
+                    onClick = onLanguageClick,
+                )
+                PartsOfSpeechOptions(
+                    selectedPartsOfSpeech = generationSettingsState.selectedPartsOfSpeech,
+                    onClick = onPartOfSpeechClick,
+                )
+                DifficultyOptions(
+                    selectedDifficulties = generationSettingsState.selectedDifficulties,
+                    onClick = onGenerationDifficultyClick,
+                )
+            }
         }
     }
 }

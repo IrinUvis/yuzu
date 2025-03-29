@@ -56,15 +56,15 @@ class WordGeneratorViewModel(
         }
     }
 
-    fun toggleExpanded() {
-        _generationSettingsState.update { it.copy(isExpanded = !it.isExpanded) }
+    fun toggleSettingsExpanded() {
+        _generationSettingsState.update { it.copy(isSettingsExpanded = !it.isSettingsExpanded) }
     }
 
-    fun clickLanguage(language: Language) {
+    fun toggleLanguageSetting(language: Language) {
         _generationSettingsState.update { it.copy(selectedLanguage = language) }
     }
 
-    fun clickPartOfSpeech(partOfSpeech: PartOfSpeech) {
+    fun togglePartOfSpeechSetting(partOfSpeech: PartOfSpeech) {
         _generationSettingsState.update {
             it.copy(
                 selectedPartsOfSpeech = it.selectedPartsOfSpeech.toMutableSet().apply {
@@ -74,10 +74,10 @@ class WordGeneratorViewModel(
         }
     }
 
-    fun clickGenerationDifficulty(generationDifficulty: GenerationDifficulty) {
+    fun toggleGenerationDifficultySetting(generationDifficulty: GenerationDifficulty) {
         _generationSettingsState.update {
             it.copy(
-                selectedGenerationDifficulties = it.selectedGenerationDifficulties.toMutableSet().apply {
+                selectedDifficulties = it.selectedDifficulties.toMutableSet().apply {
                     toggleElement(generationDifficulty)
                 },
             )
@@ -93,8 +93,8 @@ data class WordGenerationState(
 )
 
 data class GenerationSettingsState(
-    val isExpanded: Boolean = false,
+    val isSettingsExpanded: Boolean = false,
     val selectedLanguage: Language = Language.English,
     val selectedPartsOfSpeech: Set<PartOfSpeech> = setOf(PartOfSpeech.Noun),
-    val selectedGenerationDifficulties: Set<GenerationDifficulty> = setOf(GenerationDifficulty.CommonlyUsed),
+    val selectedDifficulties: Set<GenerationDifficulty> = setOf(GenerationDifficulty.CommonlyUsed),
 )
