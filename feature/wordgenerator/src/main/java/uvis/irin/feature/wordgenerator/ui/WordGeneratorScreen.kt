@@ -42,15 +42,11 @@ fun WordGeneratorScreen(
     modifier: Modifier = Modifier,
     viewModel: WordGeneratorViewModel = koinViewModel(),
 ) {
-    val wordGenerationState = viewModel.wordGenerationState.collectAsStateWithLifecycle()
-    val generationSettingsState = viewModel.generationSettingsState.collectAsStateWithLifecycle()
-    val wordGenerationAvailable = viewModel.wordGenerationAvailable.collectAsStateWithLifecycle()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     WordGeneratorScreenRoot(
         modifier = modifier,
-        wordGenerationState = wordGenerationState.value,
-        generationSettingsState = generationSettingsState.value,
-        wordGenerationAvailable = wordGenerationAvailable.value,
+        wordGeneratorUiState = uiState.value,
         onGenerateWordClick = viewModel::generateWord,
         onExplainMeaningClick = viewModel::explainGeneratedWord,
         onSettingsHeaderClick = viewModel::toggleSettingsExpanded,
@@ -63,9 +59,7 @@ fun WordGeneratorScreen(
 @Composable
 private fun WordGeneratorScreenRoot(
     modifier: Modifier = Modifier,
-    wordGenerationState: WordGenerationState,
-    generationSettingsState: GenerationSettingsState,
-    wordGenerationAvailable: Boolean,
+    wordGeneratorUiState: WordGeneratorUiState,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
     onSettingsHeaderClick: () -> Unit,
@@ -92,9 +86,7 @@ private fun WordGeneratorScreenRoot(
     ) { contentPadding ->
         WordGeneratorContent(
             modifier = Modifier.padding(contentPadding),
-            wordGenerationState = wordGenerationState,
-            generationSettingsState = generationSettingsState,
-            wordGenerationAvailable = wordGenerationAvailable,
+            wordGeneratorUiState = wordGeneratorUiState,
             onGenerateWordClick = onGenerateWordClick,
             onExplainMeaningClick = onExplainMeaningClick,
             onSettingsHeaderClick = onSettingsHeaderClick,
@@ -108,9 +100,7 @@ private fun WordGeneratorScreenRoot(
 @Composable
 private fun WordGeneratorContent(
     modifier: Modifier = Modifier,
-    wordGenerationState: WordGenerationState,
-    generationSettingsState: GenerationSettingsState,
-    wordGenerationAvailable: Boolean,
+    wordGeneratorUiState: WordGeneratorUiState,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
     onSettingsHeaderClick: () -> Unit,
@@ -127,13 +117,14 @@ private fun WordGeneratorContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         WordGeneratorActions(
-            wordGenerationState = wordGenerationState,
-            wordGenerationAvailable = wordGenerationAvailable,
+            wordGeneration = wordGeneratorUiState.wordGeneration,
+            wordExplanationGeneration = wordGeneratorUiState.wordExplanationGeneration,
+            wordGenerationAvailable = wordGeneratorUiState.wordGenerationAvailable,
             onGenerateWordClick = onGenerateWordClick,
             onExplainMeaningClick = onExplainMeaningClick,
         )
         WordGenerationSettings(
-            generationSettingsState = generationSettingsState,
+            generationSettings = wordGeneratorUiState.generationSettings,
             onSettingsHeaderClick = onSettingsHeaderClick,
             onLanguageClick = onLanguageClick,
             onPartOfSpeechClick = onPartOfSpeechClick,
@@ -145,7 +136,8 @@ private fun WordGeneratorContent(
 @Composable
 private fun WordGeneratorActions(
     modifier: Modifier = Modifier,
-    wordGenerationState: WordGenerationState,
+    wordGeneration: Generation,
+    wordExplanationGeneration: Generation,
     wordGenerationAvailable: Boolean,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
@@ -156,21 +148,20 @@ private fun WordGeneratorActions(
     ) {
         GenerateWordButton(
             modifier = Modifier.padding(horizontal = 16.dp),
-            isWordGenerating = wordGenerationState.isWordGenerating,
+            isWordGenerating = wordGeneration.isGenerating,
             wordGenerationAvailable = wordGenerationAvailable,
             onClick = onGenerateWordClick,
         )
         AnimatedNullableVisibility(
-            value = wordGenerationState.generatedWord,
+            value = wordGeneration.generation,
             enterTransition = fadeIn() + expandVertically(),
             exitTransition = fadeOut() + shrinkVertically(),
         ) { generatedWord ->
             GeneratedWordSection(
                 modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
                 generatedWord = generatedWord,
-                isWordGenerating = wordGenerationState.isWordGenerating,
-                generatedWordExplanation = wordGenerationState.generatedWordExplanation,
-                isExplanationGenerating = wordGenerationState.isExplanationGenerating,
+                isWordGenerating = wordGeneration.isGenerating,
+                wordExplanationGeneration = wordExplanationGeneration,
                 onExplainMeaningClick = onExplainMeaningClick,
             )
         }
@@ -180,7 +171,7 @@ private fun WordGeneratorActions(
 @Composable
 private fun WordGenerationSettings(
     modifier: Modifier = Modifier,
-    generationSettingsState: GenerationSettingsState,
+    generationSettings: GenerationSettings,
     onSettingsHeaderClick: () -> Unit,
     onLanguageClick: (Language) -> Unit,
     onPartOfSpeechClick: (PartOfSpeech) -> Unit,
@@ -192,24 +183,24 @@ private fun WordGenerationSettings(
     ) {
         YuzuExpandableDivider(
             label = stringResource(R.string.configure_word_generation_settings_header),
-            isExpanded = generationSettingsState.isSettingsExpanded,
+            isExpanded = generationSettings.isSettingsExpanded,
             onClick = onSettingsHeaderClick,
         )
-        AnimatedVisibility(generationSettingsState.isSettingsExpanded) {
+        AnimatedVisibility(generationSettings.isSettingsExpanded) {
             Column(
                 modifier = modifier,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 LanguageOptions(
-                    selectedLanguage = generationSettingsState.selectedLanguage,
+                    selectedLanguage = generationSettings.selectedLanguage,
                     onClick = onLanguageClick,
                 )
                 PartsOfSpeechOptions(
-                    selectedPartsOfSpeech = generationSettingsState.selectedPartsOfSpeech,
+                    selectedPartsOfSpeech = generationSettings.selectedPartsOfSpeech,
                     onClick = onPartOfSpeechClick,
                 )
                 DifficultyOptions(
-                    selectedDifficulties = generationSettingsState.selectedDifficulties,
+                    selectedDifficulties = generationSettings.selectedDifficulties,
                     onClick = onGenerationDifficultyClick,
                 )
             }

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -21,71 +20,70 @@ class WordGeneratorViewModel(
     private val generateWordUseCase: GenerateWordUseCase,
     private val explainWordUseCase: ExplainWordUseCase,
 ) : ViewModel() {
-    private val _wordGenerationState = MutableStateFlow(WordGenerationState())
-    val wordGenerationState = _wordGenerationState.asStateFlow()
+    private val _wordGeneration = MutableStateFlow(Generation())
+    private val _explanationGeneration = MutableStateFlow(Generation())
+    private val _generationSettings = MutableStateFlow(GenerationSettings())
 
-    private val _generationSettingsState = MutableStateFlow(GenerationSettingsState())
-    val generationSettingsState = _generationSettingsState.asStateFlow()
+    val uiState: StateFlow<WordGeneratorUiState> = combine(
+        _wordGeneration,
+        _explanationGeneration,
+        _generationSettings,
+    ) { wordGeneration, explanationGeneration, generationSettings ->
+        val areSettingsValid = generationSettings.selectedPartsOfSpeech.isNotEmpty() &&
+            generationSettings.selectedDifficulties.isNotEmpty()
+        val isWordOrExplanationGenerating = wordGeneration.isGenerating || explanationGeneration.isGenerating
 
-    val wordGenerationAvailable: StateFlow<Boolean> = combine(
-        _wordGenerationState,
-        _generationSettingsState,
-    ) { wordGenerationState, generationSettingsState ->
-        val areSettingsValid = generationSettingsState.selectedPartsOfSpeech.isNotEmpty() &&
-            generationSettingsState.selectedDifficulties.isNotEmpty()
-        val isWordOrExplanationGenerating = wordGenerationState.isWordGenerating ||
-            wordGenerationState.isExplanationGenerating
-
-        areSettingsValid && !isWordOrExplanationGenerating
+        WordGeneratorUiState(
+            wordGeneration = wordGeneration,
+            wordExplanationGeneration = explanationGeneration,
+            wordGenerationAvailable = areSettingsValid && !isWordOrExplanationGenerating,
+            generationSettings = generationSettings,
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
-        initialValue = false,
+        initialValue = WordGeneratorUiState(),
     )
 
     fun generateWord() {
         viewModelScope.launch {
-            _wordGenerationState.update { it.copy(isWordGenerating = true) }
+            _wordGeneration.update { it.copy(isGenerating = true) }
             generateWordUseCase().fold(
                 onSuccess = { word ->
-                    _wordGenerationState.update {
-                        it.copy(
-                            generatedWord = word,
-                            generatedWordExplanation = null,
-                        )
+                    _wordGeneration.update {
+                        it.copy(generation = word, isGenerating = false)
                     }
+                    _explanationGeneration.update { it.copy(generation = null) }
                 },
                 onFailure = {},
             )
-            _wordGenerationState.update { it.copy(isWordGenerating = false) }
         }
     }
 
     fun explainGeneratedWord() {
         viewModelScope.launch {
-            _wordGenerationState.update { it.copy(isExplanationGenerating = true) }
-            wordGenerationState.value.generatedWord?.let { generatedWord ->
+            _explanationGeneration.update { it.copy(isGenerating = true) }
+            _wordGeneration.value.generation?.let { generatedWord ->
                 explainWordUseCase(generatedWord).fold(
                     onSuccess = { explanation ->
-                        _wordGenerationState.update { it.copy(generatedWordExplanation = explanation) }
+                        _explanationGeneration.update { it.copy(generation = explanation, isGenerating = false) }
                     },
                     onFailure = {},
                 )
             }
-            _wordGenerationState.update { it.copy(isExplanationGenerating = false) }
         }
     }
 
     fun toggleSettingsExpanded() {
-        _generationSettingsState.update { it.copy(isSettingsExpanded = !it.isSettingsExpanded) }
+        _generationSettings.update { it.copy(isSettingsExpanded = !it.isSettingsExpanded) }
     }
 
     fun toggleLanguageSetting(language: Language) {
-        _generationSettingsState.update { it.copy(selectedLanguage = language) }
+        _generationSettings.update { it.copy(selectedLanguage = language) }
     }
 
     fun togglePartOfSpeechSetting(partOfSpeech: PartOfSpeech) {
-        _generationSettingsState.update {
+        _generationSettings.update {
             it.copy(
                 selectedPartsOfSpeech = it.selectedPartsOfSpeech.toMutableSet().apply {
                     toggleElement(partOfSpeech)
@@ -95,7 +93,7 @@ class WordGeneratorViewModel(
     }
 
     fun toggleGenerationDifficultySetting(generationDifficulty: GenerationDifficulty) {
-        _generationSettingsState.update {
+        _generationSettings.update {
             it.copy(
                 selectedDifficulties = it.selectedDifficulties.toMutableSet().apply {
                     toggleElement(generationDifficulty)
@@ -105,14 +103,19 @@ class WordGeneratorViewModel(
     }
 }
 
-data class WordGenerationState(
-    val generatedWord: String? = null,
-    val isWordGenerating: Boolean = false,
-    val generatedWordExplanation: String? = null,
-    val isExplanationGenerating: Boolean = false,
+data class WordGeneratorUiState(
+    val wordGeneration: Generation = Generation(),
+    val wordExplanationGeneration: Generation = Generation(),
+    val wordGenerationAvailable: Boolean = false,
+    val generationSettings: GenerationSettings = GenerationSettings(),
 )
 
-data class GenerationSettingsState(
+data class Generation(
+    val generation: String? = null,
+    val isGenerating: Boolean = false,
+)
+
+data class GenerationSettings(
     val isSettingsExpanded: Boolean = false,
     val selectedLanguage: Language = Language.English,
     val selectedPartsOfSpeech: Set<PartOfSpeech> = setOf(PartOfSpeech.Noun),

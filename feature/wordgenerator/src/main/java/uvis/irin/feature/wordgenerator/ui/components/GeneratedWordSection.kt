@@ -21,14 +21,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import uvis.irin.core.designsystem.components.animation.AnimatedNullableVisibility
 import uvis.irin.core.designsystem.preview.YuzuPreview
+import uvis.irin.feature.wordgenerator.ui.Generation
 
 @Composable
 internal fun GeneratedWordSection(
     modifier: Modifier = Modifier,
     generatedWord: String,
     isWordGenerating: Boolean,
-    generatedWordExplanation: String?,
-    isExplanationGenerating: Boolean,
+    wordExplanationGeneration: Generation,
     onExplainMeaningClick: () -> Unit,
 ) {
     Column(
@@ -41,7 +41,7 @@ internal fun GeneratedWordSection(
         Spacer(modifier = Modifier.height(16.dp))
         GeneratedWordActions(
             isWordGenerating = isWordGenerating,
-            isExplanationGenerating = isExplanationGenerating,
+            isExplanationGenerating = wordExplanationGeneration.isGenerating,
             onCopyClick = {
                 clipboardManager.setClip(
                     ClipEntry(ClipData.newPlainText("Generated word", generatedWord)),
@@ -49,10 +49,10 @@ internal fun GeneratedWordSection(
             },
             onExplainMeaningClick = onExplainMeaningClick,
         )
-        AnimatedNullableVisibility(generatedWordExplanation) { generatedWordExplanation ->
+        AnimatedNullableVisibility(wordExplanationGeneration.generation) { wordExplanation ->
             GeneratedWordExplanation(
                 modifier = Modifier.padding(top = 16.dp),
-                explanation = generatedWordExplanation,
+                explanation = wordExplanation,
             )
         }
     }
@@ -116,8 +116,10 @@ private fun GeneratedWordSectionPreview(
         GeneratedWordSection(
             generatedWord = spec.generatedWord,
             isWordGenerating = spec.isWordGenerating,
-            generatedWordExplanation = spec.generatedWordExplanation,
-            isExplanationGenerating = spec.isExplanationGenerating,
+            wordExplanationGeneration = Generation(
+                generation = spec.generatedWordExplanation,
+                isGenerating = spec.isExplanationGenerating,
+            ),
             onExplainMeaningClick = {},
         )
     }
