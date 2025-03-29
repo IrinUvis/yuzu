@@ -23,13 +23,13 @@ import uvis.irin.feature.wordgenerator.R
 internal fun GenerateWordButton(
     modifier: Modifier = Modifier,
     isWordGenerating: Boolean,
-    isExplanationGenerating: Boolean,
+    wordGenerationAvailable: Boolean,
     onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier,
         onClick = onClick,
-        enabled = !(isWordGenerating || isExplanationGenerating),
+        enabled = wordGenerationAvailable,
     ) {
         AnimatedContent(isWordGenerating) { isWordGenerating ->
             if (isWordGenerating) {
@@ -57,7 +57,7 @@ private fun GenerateWordButtonPreview(
     YuzuPreview {
         GenerateWordButton(
             isWordGenerating = spec.isWordGenerating,
-            isExplanationGenerating = spec.isExplanationGenerating,
+            wordGenerationAvailable = spec.wordGenerationAvailable,
             onClick = {},
         )
     }
@@ -66,14 +66,14 @@ private fun GenerateWordButtonPreview(
 private class GenerateWordButtonPreviewParameterProvider :
     PreviewParameterProvider<GenerateWordButtonPreviewParameterProvider.GenerateWordPreviewSpec> {
     override val values: Sequence<GenerateWordPreviewSpec> = sequenceOf(
-        GenerateWordPreviewSpec(isWordGenerating = false, isExplanationGenerating = false),
-        GenerateWordPreviewSpec(isWordGenerating = false, isExplanationGenerating = true),
-        GenerateWordPreviewSpec(isWordGenerating = true, isExplanationGenerating = false),
-        GenerateWordPreviewSpec(isWordGenerating = true, isExplanationGenerating = true),
+        GenerateWordPreviewSpec(isWordGenerating = false, wordGenerationAvailable = false),
+        GenerateWordPreviewSpec(isWordGenerating = false, wordGenerationAvailable = true),
+        GenerateWordPreviewSpec(isWordGenerating = true, wordGenerationAvailable = false),
+        GenerateWordPreviewSpec(isWordGenerating = true, wordGenerationAvailable = true),
     )
 
     data class GenerateWordPreviewSpec(
         val isWordGenerating: Boolean,
-        val isExplanationGenerating: Boolean,
+        val wordGenerationAvailable: Boolean,
     )
 }

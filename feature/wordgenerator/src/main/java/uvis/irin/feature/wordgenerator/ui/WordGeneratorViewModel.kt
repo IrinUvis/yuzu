@@ -3,7 +3,11 @@ package uvis.irin.feature.wordgenerator.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uvis.irin.core.common.toggleElement
@@ -22,6 +26,22 @@ class WordGeneratorViewModel(
 
     private val _generationSettingsState = MutableStateFlow(GenerationSettingsState())
     val generationSettingsState = _generationSettingsState.asStateFlow()
+
+    val wordGenerationAvailable: StateFlow<Boolean> = combine(
+        _wordGenerationState,
+        _generationSettingsState,
+    ) { wordGenerationState, generationSettingsState ->
+        val areSettingsValid = generationSettingsState.selectedPartsOfSpeech.isNotEmpty() &&
+            generationSettingsState.selectedDifficulties.isNotEmpty()
+        val isWordOrExplanationGenerating = wordGenerationState.isWordGenerating ||
+            wordGenerationState.isExplanationGenerating
+
+        areSettingsValid && !isWordOrExplanationGenerating
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
+        initialValue = false,
+    )
 
     fun generateWord() {
         viewModelScope.launch {

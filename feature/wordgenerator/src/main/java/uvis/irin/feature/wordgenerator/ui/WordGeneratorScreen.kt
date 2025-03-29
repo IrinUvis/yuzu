@@ -44,11 +44,13 @@ fun WordGeneratorScreen(
 ) {
     val wordGenerationState = viewModel.wordGenerationState.collectAsStateWithLifecycle()
     val generationSettingsState = viewModel.generationSettingsState.collectAsStateWithLifecycle()
+    val wordGenerationAvailable = viewModel.wordGenerationAvailable.collectAsStateWithLifecycle()
 
     WordGeneratorScreenRoot(
         modifier = modifier,
         wordGenerationState = wordGenerationState.value,
         generationSettingsState = generationSettingsState.value,
+        wordGenerationAvailable = wordGenerationAvailable.value,
         onGenerateWordClick = viewModel::generateWord,
         onExplainMeaningClick = viewModel::explainGeneratedWord,
         onSettingsHeaderClick = viewModel::toggleSettingsExpanded,
@@ -63,6 +65,7 @@ private fun WordGeneratorScreenRoot(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
     generationSettingsState: GenerationSettingsState,
+    wordGenerationAvailable: Boolean,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
     onSettingsHeaderClick: () -> Unit,
@@ -91,6 +94,7 @@ private fun WordGeneratorScreenRoot(
             modifier = Modifier.padding(contentPadding),
             wordGenerationState = wordGenerationState,
             generationSettingsState = generationSettingsState,
+            wordGenerationAvailable = wordGenerationAvailable,
             onGenerateWordClick = onGenerateWordClick,
             onExplainMeaningClick = onExplainMeaningClick,
             onSettingsHeaderClick = onSettingsHeaderClick,
@@ -106,6 +110,7 @@ private fun WordGeneratorContent(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
     generationSettingsState: GenerationSettingsState,
+    wordGenerationAvailable: Boolean,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
     onSettingsHeaderClick: () -> Unit,
@@ -123,6 +128,7 @@ private fun WordGeneratorContent(
     ) {
         WordGeneratorActions(
             wordGenerationState = wordGenerationState,
+            wordGenerationAvailable = wordGenerationAvailable,
             onGenerateWordClick = onGenerateWordClick,
             onExplainMeaningClick = onExplainMeaningClick,
         )
@@ -140,6 +146,7 @@ private fun WordGeneratorContent(
 private fun WordGeneratorActions(
     modifier: Modifier = Modifier,
     wordGenerationState: WordGenerationState,
+    wordGenerationAvailable: Boolean,
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
 ) {
@@ -150,7 +157,7 @@ private fun WordGeneratorActions(
         GenerateWordButton(
             modifier = Modifier.padding(horizontal = 16.dp),
             isWordGenerating = wordGenerationState.isWordGenerating,
-            isExplanationGenerating = wordGenerationState.isExplanationGenerating,
+            wordGenerationAvailable = wordGenerationAvailable,
             onClick = onGenerateWordClick,
         )
         AnimatedNullableVisibility(
