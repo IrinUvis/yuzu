@@ -1,6 +1,7 @@
 package uvis.irin.feature.wordgenerator.ui.components
 
 import android.content.ClipData
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +38,9 @@ internal fun GeneratedWordSection(
     ) {
         val clipboardManager = LocalClipboardManager.current
 
-        GeneratedWord(generatedWord = generatedWord)
+        AnimatedContent(generatedWord) { targetGeneratedWord ->
+            GeneratedWord(generatedWord = targetGeneratedWord)
+        }
         Spacer(modifier = Modifier.height(16.dp))
         GeneratedWordActions(
             isWordGenerating = isWordGenerating,
@@ -50,10 +53,12 @@ internal fun GeneratedWordSection(
             onExplainMeaningClick = onExplainMeaningClick,
         )
         AnimatedNullableVisibility(wordExplanationGeneration.generation) { wordExplanation ->
-            GeneratedWordExplanation(
-                modifier = Modifier.padding(top = 16.dp),
-                explanation = wordExplanation,
-            )
+            AnimatedContent(wordExplanation) { targetWordExplanation ->
+                GeneratedWordExplanation(
+                    modifier = Modifier.padding(top = 16.dp),
+                    explanation = targetWordExplanation,
+                )
+            }
         }
     }
 }
