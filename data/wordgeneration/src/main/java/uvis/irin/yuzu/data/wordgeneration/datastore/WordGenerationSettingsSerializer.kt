@@ -1,9 +1,10 @@
 package uvis.irin.yuzu.data.wordgeneration.datastore
 
-import android.util.Log
 import androidx.datastore.core.Serializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import uvis.irin.yuzu.core.logger.LoggerSeverity
+import uvis.irin.yuzu.core.logger.YuzuLogger
 import uvis.irin.yuzu.data.wordgeneration.model.DifficultyModel
 import uvis.irin.yuzu.data.wordgeneration.model.LanguageModel
 import uvis.irin.yuzu.data.wordgeneration.model.PartOfSpeechModel
@@ -11,7 +12,7 @@ import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsDataModel
 import java.io.InputStream
 import java.io.OutputStream
 
-object WordGenerationSettingsSerializer : Serializer<WordGenerationSettingsDataModel> {
+class WordGenerationSettingsSerializer(private val logger: YuzuLogger) : Serializer<WordGenerationSettingsDataModel> {
     override val defaultValue: WordGenerationSettingsDataModel
         get() = WordGenerationSettingsDataModel(
             language = LanguageModel.English,
@@ -29,7 +30,12 @@ object WordGenerationSettingsSerializer : Serializer<WordGenerationSettingsDataM
                 string = input.readBytes().decodeToString(),
             )
         } catch (e: SerializationException) {
-            Log.d("WordGenerationSettingsSerializer", "Error deserializing WordGenerationSettings", e)
+            logger.log(
+                tag = "WordGenerationSettingsSerializer",
+                message = "Error deserializing WordGenerationSettings",
+                severity = LoggerSeverity.Error,
+                throwable = e,
+            )
             defaultValue
         }
     }

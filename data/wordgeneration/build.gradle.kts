@@ -9,6 +9,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.logger)
+
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
 

@@ -27,7 +27,8 @@ include(
     ":domain:wordgeneration",
     ":data:wordgeneration",
     ":core:common",
-    ":core:design-system"
+    ":core:design-system",
+    ":core:logger",
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
