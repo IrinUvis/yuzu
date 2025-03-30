@@ -4,12 +4,12 @@ import androidx.datastore.core.DataStore
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import uvis.irin.yuzu.data.wordgeneration.datastore.createWordGenerationSettingsDatastore
-import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsModel
+import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsDataModel
 import uvis.irin.yuzu.data.wordgeneration.repository.DataStoreWordGeneratorSettingsRepository
 import uvis.irin.yuzu.data.wordgeneration.repository.WordGeneratorSettingsRepository
 
 val wordGeneratorDataModule = module {
-    single<DataStore<WordGenerationSettingsModel>> {
+    single<DataStore<WordGenerationSettingsDataModel>> {
         createWordGenerationSettingsDatastore(androidContext())
     }
 

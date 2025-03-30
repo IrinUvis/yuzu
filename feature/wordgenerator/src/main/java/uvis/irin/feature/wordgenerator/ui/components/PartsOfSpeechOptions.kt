@@ -15,13 +15,13 @@ import uvis.irin.core.designsystem.components.section.SectionHeader
 import uvis.irin.core.designsystem.components.text.HeaderWithSubtitle
 import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.R
-import uvis.irin.feature.wordgenerator.ui.model.PartOfSpeech
+import uvis.irin.feature.wordgenerator.ui.model.UiPartOfSpeech
 
 @Composable
 internal fun PartsOfSpeechOptions(
     modifier: Modifier = Modifier,
-    selectedPartsOfSpeech: Set<PartOfSpeech>,
-    onClick: (PartOfSpeech) -> Unit,
+    selectedPartsOfSpeech: Set<UiPartOfSpeech>,
+    onClick: (UiPartOfSpeech) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -41,35 +41,35 @@ internal fun PartsOfSpeechOptions(
 @Composable
 private fun PartsOfSpeechCheckboxGroup(
     modifier: Modifier = Modifier,
-    selectedPartsOfSpeech: Set<PartOfSpeech>,
-    onClick: (PartOfSpeech) -> Unit,
+    selectedPartsOfSpeech: Set<UiPartOfSpeech>,
+    onClick: (UiPartOfSpeech) -> Unit,
 ) {
     Column(modifier = modifier) {
         PartOfSpeechCheckbox(
             modifier = Modifier.partOfSpeechModifier(
-                partOfSpeech = PartOfSpeech.Noun,
+                partOfSpeech = UiPartOfSpeech.Noun,
                 onClick = onClick,
             ),
-            partOfSpeech = PartOfSpeech.Noun,
-            checked = PartOfSpeech.Noun in selectedPartsOfSpeech,
+            partOfSpeech = UiPartOfSpeech.Noun,
+            checked = UiPartOfSpeech.Noun in selectedPartsOfSpeech,
             onClick = onClick,
         )
         PartOfSpeechCheckbox(
             modifier = Modifier.partOfSpeechModifier(
-                partOfSpeech = PartOfSpeech.Verb,
+                partOfSpeech = UiPartOfSpeech.Verb,
                 onClick = onClick,
             ),
-            partOfSpeech = PartOfSpeech.Verb,
-            checked = PartOfSpeech.Verb in selectedPartsOfSpeech,
+            partOfSpeech = UiPartOfSpeech.Verb,
+            checked = UiPartOfSpeech.Verb in selectedPartsOfSpeech,
             onClick = onClick,
         )
         PartOfSpeechCheckbox(
             modifier = Modifier.partOfSpeechModifier(
-                partOfSpeech = PartOfSpeech.Adjective,
+                partOfSpeech = UiPartOfSpeech.Adjective,
                 onClick = onClick,
             ),
-            partOfSpeech = PartOfSpeech.Adjective,
-            checked = PartOfSpeech.Adjective in selectedPartsOfSpeech,
+            partOfSpeech = UiPartOfSpeech.Adjective,
+            checked = UiPartOfSpeech.Adjective in selectedPartsOfSpeech,
             onClick = onClick,
         )
     }
@@ -77,8 +77,8 @@ private fun PartsOfSpeechCheckboxGroup(
 
 @Composable
 private fun Modifier.partOfSpeechModifier(
-    partOfSpeech: PartOfSpeech,
-    onClick: (PartOfSpeech) -> Unit,
+    partOfSpeech: UiPartOfSpeech,
+    onClick: (UiPartOfSpeech) -> Unit,
 ) = this
     .clickable { onClick(partOfSpeech) }
     .padding(vertical = 4.dp, horizontal = 16.dp)
@@ -86,9 +86,9 @@ private fun Modifier.partOfSpeechModifier(
 @Composable
 private fun PartOfSpeechCheckbox(
     modifier: Modifier = Modifier,
-    partOfSpeech: PartOfSpeech,
+    partOfSpeech: UiPartOfSpeech,
     checked: Boolean,
-    onClick: (PartOfSpeech) -> Unit,
+    onClick: (UiPartOfSpeech) -> Unit,
 ) {
     YuzuCheckboxOption(
         modifier = modifier,
@@ -103,15 +103,15 @@ private fun PartOfSpeechCheckbox(
 }
 
 @Composable
-private fun headerForPartOfSpeech(partOfSpeech: PartOfSpeech) = when (partOfSpeech) {
-    PartOfSpeech.Noun -> stringResource(R.string.noun_part_of_speech_header)
-    PartOfSpeech.Verb -> stringResource(R.string.verb_part_of_speech_header)
-    PartOfSpeech.Adjective -> stringResource(R.string.adjective_part_of_speech_header)
+private fun headerForPartOfSpeech(partOfSpeech: UiPartOfSpeech) = when (partOfSpeech) {
+    UiPartOfSpeech.Noun -> stringResource(R.string.noun_part_of_speech_header)
+    UiPartOfSpeech.Verb -> stringResource(R.string.verb_part_of_speech_header)
+    UiPartOfSpeech.Adjective -> stringResource(R.string.adjective_part_of_speech_header)
 }
 
 @Composable
-private fun subtitleForPartOfSpeech(partOfSpeech: PartOfSpeech) = when (partOfSpeech) {
-    PartOfSpeech.Verb -> stringResource(R.string.verb_part_of_speech_subtitle)
+private fun subtitleForPartOfSpeech(partOfSpeech: UiPartOfSpeech) = when (partOfSpeech) {
+    UiPartOfSpeech.Verb -> stringResource(R.string.verb_part_of_speech_subtitle)
     else -> null
 }
 
@@ -121,7 +121,7 @@ private fun subtitleForPartOfSpeech(partOfSpeech: PartOfSpeech) = when (partOfSp
 private fun PartsOfSpeechOptionsPreview() {
     YuzuPreview {
         PartsOfSpeechOptions(
-            selectedPartsOfSpeech = setOf(PartOfSpeech.Noun, PartOfSpeech.Verb),
+            selectedPartsOfSpeech = setOf(UiPartOfSpeech.Noun, UiPartOfSpeech.Verb),
             onClick = {},
         )
     }

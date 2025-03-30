@@ -1,13 +1,12 @@
 package uvis.irin.yuzu.data.wordgeneration.model
 
-import kotlinx.collections.immutable.PersistentSet
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WordGenerationSettingsModel(
+data class WordGenerationSettingsDataModel(
     val language: LanguageModel,
-    val partsOfSpeech: PersistentSet<PartOfSpeechModel>,
-    val difficulties: PersistentSet<DifficultyModel>,
+    val partsOfSpeech: Set<PartOfSpeechModel>,
+    val difficulties: Set<DifficultyModel>,
 )
 
 enum class LanguageModel {

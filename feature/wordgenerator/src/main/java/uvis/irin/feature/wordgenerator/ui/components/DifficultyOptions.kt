@@ -15,13 +15,13 @@ import uvis.irin.core.designsystem.components.section.SectionHeader
 import uvis.irin.core.designsystem.components.text.HeaderWithSubtitle
 import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.R
-import uvis.irin.feature.wordgenerator.ui.model.GenerationDifficulty
+import uvis.irin.feature.wordgenerator.ui.model.UiDifficulty
 
 @Composable
 internal fun DifficultyOptions(
     modifier: Modifier = Modifier,
-    selectedDifficulties: Set<GenerationDifficulty>,
-    onClick: (GenerationDifficulty) -> Unit,
+    selectedDifficulties: Set<UiDifficulty>,
+    onClick: (UiDifficulty) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -41,35 +41,35 @@ internal fun DifficultyOptions(
 @Composable
 private fun DifficultyCheckboxGroup(
     modifier: Modifier = Modifier,
-    selectedDifficulty: Set<GenerationDifficulty>,
-    onClick: (GenerationDifficulty) -> Unit,
+    selectedDifficulty: Set<UiDifficulty>,
+    onClick: (UiDifficulty) -> Unit,
 ) {
     Column(modifier = modifier) {
         DifficultyCheckbox(
             modifier = Modifier.difficultyModifier(
-                difficulty = GenerationDifficulty.CommonlyUsed,
+                difficulty = UiDifficulty.CommonlyUsed,
                 onClick = onClick,
             ),
-            difficulty = GenerationDifficulty.CommonlyUsed,
-            checked = GenerationDifficulty.CommonlyUsed in selectedDifficulty,
+            difficulty = UiDifficulty.CommonlyUsed,
+            checked = UiDifficulty.CommonlyUsed in selectedDifficulty,
             onClick = onClick,
         )
         DifficultyCheckbox(
             modifier = Modifier.difficultyModifier(
-                difficulty = GenerationDifficulty.LessCommonlyUsed,
+                difficulty = UiDifficulty.LessCommonlyUsed,
                 onClick = onClick,
             ),
-            difficulty = GenerationDifficulty.LessCommonlyUsed,
-            checked = GenerationDifficulty.LessCommonlyUsed in selectedDifficulty,
+            difficulty = UiDifficulty.LessCommonlyUsed,
+            checked = UiDifficulty.LessCommonlyUsed in selectedDifficulty,
             onClick = onClick,
         )
         DifficultyCheckbox(
             modifier = Modifier.difficultyModifier(
-                difficulty = GenerationDifficulty.RarelyUsed,
+                difficulty = UiDifficulty.RarelyUsed,
                 onClick = onClick,
             ),
-            difficulty = GenerationDifficulty.RarelyUsed,
-            checked = GenerationDifficulty.RarelyUsed in selectedDifficulty,
+            difficulty = UiDifficulty.RarelyUsed,
+            checked = UiDifficulty.RarelyUsed in selectedDifficulty,
             onClick = onClick,
         )
     }
@@ -77,8 +77,8 @@ private fun DifficultyCheckboxGroup(
 
 @Composable
 private fun Modifier.difficultyModifier(
-    difficulty: GenerationDifficulty,
-    onClick: (GenerationDifficulty) -> Unit,
+    difficulty: UiDifficulty,
+    onClick: (UiDifficulty) -> Unit,
 ) = this
     .clickable { onClick(difficulty) }
     .padding(vertical = 4.dp, horizontal = 16.dp)
@@ -86,9 +86,9 @@ private fun Modifier.difficultyModifier(
 @Composable
 private fun DifficultyCheckbox(
     modifier: Modifier = Modifier,
-    difficulty: GenerationDifficulty,
+    difficulty: UiDifficulty,
     checked: Boolean,
-    onClick: (GenerationDifficulty) -> Unit,
+    onClick: (UiDifficulty) -> Unit,
 ) {
     YuzuCheckboxOption(
         modifier = modifier,
@@ -103,17 +103,17 @@ private fun DifficultyCheckbox(
 }
 
 @Composable
-private fun headerForDifficulty(difficulty: GenerationDifficulty) = when (difficulty) {
-    GenerationDifficulty.CommonlyUsed -> stringResource(R.string.commonly_used_difficulty_header)
-    GenerationDifficulty.LessCommonlyUsed -> stringResource(R.string.less_commonly_used_difficulty_header)
-    GenerationDifficulty.RarelyUsed -> stringResource(R.string.rarely_used_difficulty_header)
+private fun headerForDifficulty(difficulty: UiDifficulty) = when (difficulty) {
+    UiDifficulty.CommonlyUsed -> stringResource(R.string.commonly_used_difficulty_header)
+    UiDifficulty.LessCommonlyUsed -> stringResource(R.string.less_commonly_used_difficulty_header)
+    UiDifficulty.RarelyUsed -> stringResource(R.string.rarely_used_difficulty_header)
 }
 
 @Composable
-private fun subtitleForDifficulty(difficulty: GenerationDifficulty) = when (difficulty) {
-    GenerationDifficulty.CommonlyUsed -> stringResource(R.string.commonly_used_difficulty_subtitle)
-    GenerationDifficulty.LessCommonlyUsed -> stringResource(R.string.less_commonly_used_difficulty_subtitle)
-    GenerationDifficulty.RarelyUsed -> stringResource(R.string.rarely_used_difficulty_subtitle)
+private fun subtitleForDifficulty(difficulty: UiDifficulty) = when (difficulty) {
+    UiDifficulty.CommonlyUsed -> stringResource(R.string.commonly_used_difficulty_subtitle)
+    UiDifficulty.LessCommonlyUsed -> stringResource(R.string.less_commonly_used_difficulty_subtitle)
+    UiDifficulty.RarelyUsed -> stringResource(R.string.rarely_used_difficulty_subtitle)
 }
 
 @PreviewDynamicColors
@@ -122,7 +122,7 @@ private fun subtitleForDifficulty(difficulty: GenerationDifficulty) = when (diff
 private fun DifficultyOptionsPreview() {
     YuzuPreview {
         DifficultyOptions(
-            selectedDifficulties = setOf(GenerationDifficulty.CommonlyUsed, GenerationDifficulty.LessCommonlyUsed),
+            selectedDifficulties = setOf(UiDifficulty.CommonlyUsed, UiDifficulty.LessCommonlyUsed),
             onClick = {},
         )
     }

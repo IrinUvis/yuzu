@@ -1,8 +1,8 @@
 package uvis.irin.yuzu.domain.wordgeneration.usecase
 
 import kotlinx.coroutines.flow.Flow
-import uvis.irin.yuzu.domain.wordgeneration.model.WordGenerationSettings
+import uvis.irin.yuzu.domain.wordgeneration.model.WordGenerationSettingsModel
 
 interface GetWordGenerationSettingsUseCase {
-    suspend operator fun invoke(): Flow<WordGenerationSettings>
+    operator fun invoke(): Flow<WordGenerationSettingsModel>
 }

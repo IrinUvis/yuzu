@@ -16,13 +16,13 @@ import uvis.irin.core.designsystem.components.section.SectionHeader
 import uvis.irin.core.designsystem.components.text.HeaderWithSubtitle
 import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.R
-import uvis.irin.feature.wordgenerator.ui.model.Language
+import uvis.irin.feature.wordgenerator.ui.model.UiLanguage
 
 @Composable
 internal fun LanguageOptions(
     modifier: Modifier = Modifier,
-    selectedLanguage: Language,
-    onClick: (Language) -> Unit,
+    selectedLanguage: UiLanguage,
+    onClick: (UiLanguage) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -42,26 +42,26 @@ internal fun LanguageOptions(
 @Composable
 private fun LanguageOptionRadioGroup(
     modifier: Modifier = Modifier,
-    selectedLanguage: Language,
-    onClick: (Language) -> Unit,
+    selectedLanguage: UiLanguage,
+    onClick: (UiLanguage) -> Unit,
 ) {
     Column(modifier = modifier.selectableGroup()) {
         LanguageRadioButton(
             modifier = Modifier.languageOptionModifier(
-                language = Language.English,
+                language = UiLanguage.English,
                 onClick = onClick,
             ),
-            language = Language.English,
-            selected = selectedLanguage == Language.English,
+            language = UiLanguage.English,
+            selected = selectedLanguage == UiLanguage.English,
             onClick = onClick,
         )
         LanguageRadioButton(
             modifier = Modifier.languageOptionModifier(
-                language = Language.Polish,
+                language = UiLanguage.Polish,
                 onClick = onClick,
             ),
-            language = Language.Polish,
-            selected = selectedLanguage == Language.Polish,
+            language = UiLanguage.Polish,
+            selected = selectedLanguage == UiLanguage.Polish,
             onClick = onClick,
         )
     }
@@ -69,8 +69,8 @@ private fun LanguageOptionRadioGroup(
 
 @Composable
 private fun Modifier.languageOptionModifier(
-    language: Language,
-    onClick: (Language) -> Unit,
+    language: UiLanguage,
+    onClick: (UiLanguage) -> Unit,
 ) = this
     .clickable { onClick(language) }
     .padding(vertical = 4.dp, horizontal = 16.dp)
@@ -78,9 +78,9 @@ private fun Modifier.languageOptionModifier(
 @Composable
 private fun LanguageRadioButton(
     modifier: Modifier = Modifier,
-    language: Language,
+    language: UiLanguage,
     selected: Boolean,
-    onClick: (Language) -> Unit,
+    onClick: (UiLanguage) -> Unit,
 ) {
     YuzuRadioOption(
         modifier = modifier,
@@ -95,15 +95,15 @@ private fun LanguageRadioButton(
 }
 
 @Composable
-private fun headerForLanguage(language: Language) = when (language) {
-    Language.English -> stringResource(R.string.english_language_header)
-    Language.Polish -> stringResource(R.string.polish_language_header)
+private fun headerForLanguage(language: UiLanguage) = when (language) {
+    UiLanguage.English -> stringResource(R.string.english_language_header)
+    UiLanguage.Polish -> stringResource(R.string.polish_language_header)
 }
 
 @Composable
-private fun subtitleForLanguage(language: Language) = when (language) {
-    Language.English -> stringResource(R.string.english_language_subtitle)
-    Language.Polish -> stringResource(R.string.polish_language_subtitle)
+private fun subtitleForLanguage(language: UiLanguage) = when (language) {
+    UiLanguage.English -> stringResource(R.string.english_language_subtitle)
+    UiLanguage.Polish -> stringResource(R.string.polish_language_subtitle)
 }
 
 @PreviewDynamicColors
@@ -112,7 +112,7 @@ private fun subtitleForLanguage(language: Language) = when (language) {
 private fun LanguageOptionsPreview() {
     YuzuPreview {
         LanguageOptions(
-            selectedLanguage = Language.English,
+            selectedLanguage = UiLanguage.English,
             onClick = {},
         )
     }

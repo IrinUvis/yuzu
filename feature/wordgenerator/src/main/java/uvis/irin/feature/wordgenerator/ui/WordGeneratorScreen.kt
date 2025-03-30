@@ -36,9 +36,9 @@ import uvis.irin.feature.wordgenerator.ui.components.GeneratedWordSection
 import uvis.irin.feature.wordgenerator.ui.components.HelpBottomSheetContent
 import uvis.irin.feature.wordgenerator.ui.components.LanguageOptions
 import uvis.irin.feature.wordgenerator.ui.components.PartsOfSpeechOptions
-import uvis.irin.feature.wordgenerator.ui.model.GenerationDifficulty
-import uvis.irin.feature.wordgenerator.ui.model.Language
-import uvis.irin.feature.wordgenerator.ui.model.PartOfSpeech
+import uvis.irin.feature.wordgenerator.ui.model.UiDifficulty
+import uvis.irin.feature.wordgenerator.ui.model.UiLanguage
+import uvis.irin.feature.wordgenerator.ui.model.UiPartOfSpeech
 
 @Composable
 fun WordGeneratorScreen(
@@ -71,9 +71,9 @@ private fun WordGeneratorScreenRoot(
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
     onSettingsHeaderClick: () -> Unit,
-    onLanguageClick: (Language) -> Unit,
-    onPartOfSpeechClick: (PartOfSpeech) -> Unit,
-    onGenerationDifficultyClick: (GenerationDifficulty) -> Unit,
+    onLanguageClick: (UiLanguage) -> Unit,
+    onPartOfSpeechClick: (UiPartOfSpeech) -> Unit,
+    onGenerationDifficultyClick: (UiDifficulty) -> Unit,
 ) {
     Scaffold(
         modifier = modifier,
@@ -131,9 +131,9 @@ private fun WordGeneratorContent(
     onGenerateWordClick: () -> Unit,
     onExplainMeaningClick: () -> Unit,
     onSettingsHeaderClick: () -> Unit,
-    onLanguageClick: (Language) -> Unit,
-    onPartOfSpeechClick: (PartOfSpeech) -> Unit,
-    onGenerationDifficultyClick: (GenerationDifficulty) -> Unit,
+    onLanguageClick: (UiLanguage) -> Unit,
+    onPartOfSpeechClick: (UiPartOfSpeech) -> Unit,
+    onGenerationDifficultyClick: (UiDifficulty) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -200,9 +200,9 @@ private fun WordGenerationSettings(
     modifier: Modifier = Modifier,
     generationSettings: GenerationSettings,
     onSettingsHeaderClick: () -> Unit,
-    onLanguageClick: (Language) -> Unit,
-    onPartOfSpeechClick: (PartOfSpeech) -> Unit,
-    onGenerationDifficultyClick: (GenerationDifficulty) -> Unit,
+    onLanguageClick: (UiLanguage) -> Unit,
+    onPartOfSpeechClick: (UiPartOfSpeech) -> Unit,
+    onGenerationDifficultyClick: (UiDifficulty) -> Unit,
 ) {
     Column(
         modifier = modifier,

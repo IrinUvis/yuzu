@@ -6,40 +6,51 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uvis.irin.core.common.toggleElement
 import uvis.irin.feature.wordgenerator.domain.ExplainWordUseCase
 import uvis.irin.feature.wordgenerator.domain.GenerateWordUseCase
-import uvis.irin.feature.wordgenerator.ui.model.GenerationDifficulty
-import uvis.irin.feature.wordgenerator.ui.model.Language
-import uvis.irin.feature.wordgenerator.ui.model.PartOfSpeech
+import uvis.irin.feature.wordgenerator.ui.model.UiDifficulty
+import uvis.irin.feature.wordgenerator.ui.model.UiLanguage
+import uvis.irin.feature.wordgenerator.ui.model.UiPartOfSpeech
+import uvis.irin.feature.wordgenerator.ui.model.toUiModel
+import uvis.irin.yuzu.domain.wordgeneration.usecase.GetWordGenerationSettingsUseCase
+import uvis.irin.yuzu.domain.wordgeneration.usecase.UpdateWordGenerationSettingsUseCase
 
 class WordGeneratorViewModel(
     private val generateWordUseCase: GenerateWordUseCase,
     private val explainWordUseCase: ExplainWordUseCase,
+    private val updateWordGenerationSettingsUseCase: UpdateWordGenerationSettingsUseCase,
+    getWordGenerationSettingsUseCase: GetWordGenerationSettingsUseCase,
 ) : ViewModel() {
     private val _wordGeneration = MutableStateFlow(Generation())
     private val _explanationGeneration = MutableStateFlow(Generation())
-    private val _generationSettings = MutableStateFlow(GenerationSettings())
+    private val _isSettingsExpanded = MutableStateFlow(false)
     private val _helpVisible = MutableStateFlow(false)
 
     val uiState: StateFlow<WordGeneratorUiState> = combine(
         _wordGeneration,
         _explanationGeneration,
-        _generationSettings,
+        _isSettingsExpanded,
+        getWordGenerationSettingsUseCase().map { it.toUiModel() },
         _helpVisible,
-    ) { wordGeneration, explanationGeneration, generationSettings, helpVisible ->
-        val areSettingsValid = generationSettings.selectedPartsOfSpeech.isNotEmpty() &&
-            generationSettings.selectedDifficulties.isNotEmpty()
+    ) { wordGeneration, explanationGeneration, isSettingsExpanded, generationSettings, helpVisible ->
+        val areSettingsValid = generationSettings.partsOfSpeech.isNotEmpty() &&
+            generationSettings.difficulties.isNotEmpty()
         val isWordOrExplanationGenerating = wordGeneration.isGenerating || explanationGeneration.isGenerating
 
         WordGeneratorUiState(
             wordGeneration = wordGeneration,
             wordExplanationGeneration = explanationGeneration,
             wordGenerationAvailable = areSettingsValid && !isWordOrExplanationGenerating,
-            generationSettings = generationSettings,
+            generationSettings = GenerationSettings(
+                isSettingsExpanded = isSettingsExpanded,
+                selectedLanguage = generationSettings.language,
+                selectedPartsOfSpeech = generationSettings.partsOfSpeech,
+                selectedDifficulties = generationSettings.difficulties,
+            ),
             helpVisible = helpVisible,
         )
     }.stateIn(
@@ -86,50 +97,39 @@ class WordGeneratorViewModel(
     }
 
     fun toggleSettingsExpanded() {
-        _generationSettings.update { it.copy(isSettingsExpanded = !it.isSettingsExpanded) }
+        _isSettingsExpanded.update { isSettingsExpanded -> !isSettingsExpanded }
     }
 
-    fun toggleLanguageSetting(language: Language) {
-        _generationSettings.update { it.copy(selectedLanguage = language) }
-    }
-
-    fun togglePartOfSpeechSetting(partOfSpeech: PartOfSpeech) {
-        _generationSettings.update {
-            it.copy(
-                selectedPartsOfSpeech = it.selectedPartsOfSpeech.toMutableSet().apply {
-                    toggleElement(partOfSpeech)
-                },
+    fun toggleLanguageSetting(language: UiLanguage) {
+        viewModelScope.launch {
+            updateWordGenerationSettingsUseCase(
+                uiState.value.generationSettings
+                    .withToggledSetting(language = language)
+                    .toUiModel()
+                    .toDomainModel(),
             )
         }
     }
 
-    fun toggleGenerationDifficultySetting(generationDifficulty: GenerationDifficulty) {
-        _generationSettings.update {
-            it.copy(
-                selectedDifficulties = it.selectedDifficulties.toMutableSet().apply {
-                    toggleElement(generationDifficulty)
-                },
+    fun togglePartOfSpeechSetting(partOfSpeech: UiPartOfSpeech) {
+        viewModelScope.launch {
+            updateWordGenerationSettingsUseCase(
+                uiState.value.generationSettings
+                    .withToggledSetting(partOfSpeech = partOfSpeech)
+                    .toUiModel()
+                    .toDomainModel(),
+            )
+        }
+    }
+
+    fun toggleGenerationDifficultySetting(difficulty: UiDifficulty) {
+        viewModelScope.launch {
+            updateWordGenerationSettingsUseCase(
+                uiState.value.generationSettings
+                    .withToggledSetting(difficulty = difficulty)
+                    .toUiModel()
+                    .toDomainModel(),
             )
         }
     }
 }
-
-data class WordGeneratorUiState(
-    val wordGeneration: Generation = Generation(),
-    val wordExplanationGeneration: Generation = Generation(),
-    val wordGenerationAvailable: Boolean = false,
-    val generationSettings: GenerationSettings = GenerationSettings(),
-    val helpVisible: Boolean = false,
-)
-
-data class Generation(
-    val generation: String? = null,
-    val isGenerating: Boolean = false,
-)
-
-data class GenerationSettings(
-    val isSettingsExpanded: Boolean = false,
-    val selectedLanguage: Language = Language.English,
-    val selectedPartsOfSpeech: Set<PartOfSpeech> = setOf(PartOfSpeech.Noun),
-    val selectedDifficulties: Set<GenerationDifficulty> = setOf(GenerationDifficulty.CommonlyUsed),
-)

@@ -2,31 +2,30 @@ package uvis.irin.yuzu.data.wordgeneration.datastore
 
 import android.util.Log
 import androidx.datastore.core.Serializer
-import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import uvis.irin.yuzu.data.wordgeneration.model.DifficultyModel
 import uvis.irin.yuzu.data.wordgeneration.model.LanguageModel
 import uvis.irin.yuzu.data.wordgeneration.model.PartOfSpeechModel
-import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsModel
+import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsDataModel
 import java.io.InputStream
 import java.io.OutputStream
 
-object WordGenerationSettingsSerializer : Serializer<WordGenerationSettingsModel> {
-    override val defaultValue: WordGenerationSettingsModel
-        get() = WordGenerationSettingsModel(
+object WordGenerationSettingsSerializer : Serializer<WordGenerationSettingsDataModel> {
+    override val defaultValue: WordGenerationSettingsDataModel
+        get() = WordGenerationSettingsDataModel(
             language = LanguageModel.English,
-            partsOfSpeech = persistentSetOf(
+            partsOfSpeech = setOf(
                 PartOfSpeechModel.Noun,
                 PartOfSpeechModel.Verb,
             ),
-            difficulties = persistentSetOf(DifficultyModel.CommonlyUsed),
+            difficulties = setOf(DifficultyModel.CommonlyUsed),
         )
 
-    override suspend fun readFrom(input: InputStream): WordGenerationSettingsModel {
+    override suspend fun readFrom(input: InputStream): WordGenerationSettingsDataModel {
         return try {
             Json.decodeFromString(
-                deserializer = WordGenerationSettingsModel.serializer(),
+                deserializer = WordGenerationSettingsDataModel.serializer(),
                 string = input.readBytes().decodeToString(),
             )
         } catch (e: SerializationException) {
@@ -36,12 +35,12 @@ object WordGenerationSettingsSerializer : Serializer<WordGenerationSettingsModel
     }
 
     override suspend fun writeTo(
-        t: WordGenerationSettingsModel,
+        t: WordGenerationSettingsDataModel,
         output: OutputStream,
     ) {
         output.write(
             Json.encodeToString(
-                serializer = WordGenerationSettingsModel.serializer(),
+                serializer = WordGenerationSettingsDataModel.serializer(),
                 value = t,
             ).toByteArray(),
         )
