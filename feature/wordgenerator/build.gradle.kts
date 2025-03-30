@@ -12,6 +12,7 @@ android {
 dependencies {
     api(projects.core.designSystem)
 
+    implementation(projects.domain.wordgeneration)
     implementation(projects.core.common)
 
     implementation(platform(libs.koin.bom))

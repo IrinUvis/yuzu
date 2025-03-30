@@ -24,7 +24,8 @@ rootProject.name = "yuzu"
 include(
     ":app",
     ":feature:wordgenerator",
-    ":data:wordgenerator",
+    ":domain:wordgeneration",
+    ":data:wordgeneration",
     ":core:common",
     ":core:design-system"
 )
