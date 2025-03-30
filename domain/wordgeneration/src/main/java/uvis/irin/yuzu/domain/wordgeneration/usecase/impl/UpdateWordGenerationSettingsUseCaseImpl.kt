@@ -1,12 +1,13 @@
-package uvis.irin.yuzu.domain.wordgeneration.usecase
+package uvis.irin.yuzu.domain.wordgeneration.usecase.impl
 
 import uvis.irin.yuzu.data.wordgeneration.repository.WordGeneratorSettingsRepository
 import uvis.irin.yuzu.domain.wordgeneration.model.WordGenerationSettings
+import uvis.irin.yuzu.domain.wordgeneration.usecase.UpdateWordGenerationSettingsUseCase
 
 internal class UpdateWordGenerationSettingsUseCaseImpl(
     private val wordGeneratorSettingsRepository: WordGeneratorSettingsRepository,
-) {
-    suspend operator fun invoke(settings: WordGenerationSettings) {
+) : UpdateWordGenerationSettingsUseCase {
+    override suspend operator fun invoke(settings: WordGenerationSettings) {
         wordGeneratorSettingsRepository.storeGenerationSettings(
             generationSettingsPreferences = settings.toModel(),
         )

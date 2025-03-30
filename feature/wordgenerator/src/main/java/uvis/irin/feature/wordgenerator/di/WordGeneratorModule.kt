@@ -8,9 +8,12 @@ import uvis.irin.feature.wordgenerator.domain.ExplainWordUseCaseImpl
 import uvis.irin.feature.wordgenerator.domain.GenerateWordUseCase
 import uvis.irin.feature.wordgenerator.domain.GenerateWordUseCaseImpl
 import uvis.irin.feature.wordgenerator.ui.WordGeneratorViewModel
+import uvis.irin.yuzu.domain.wordgeneration.di.wordGenerationDomainModule
 
 val wordGeneratorModule = module {
     singleOf<ExplainWordUseCase>(::ExplainWordUseCaseImpl)
     singleOf<GenerateWordUseCase>(::GenerateWordUseCaseImpl)
     viewModelOf(::WordGeneratorViewModel)
+
+    includes(wordGenerationDomainModule)
 }

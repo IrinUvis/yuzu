@@ -10,6 +10,9 @@ android {
 dependencies {
     implementation(projects.data.wordgeneration)
 
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlinx.collections.immutable)
 
