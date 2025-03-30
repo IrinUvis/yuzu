@@ -6,7 +6,7 @@ import uvis.irin.yuzu.data.wordgeneration.repository.WordGeneratorSettingsReposi
 import uvis.irin.yuzu.domain.wordgeneration.model.WordGenerationSettings
 import uvis.irin.yuzu.domain.wordgeneration.model.toDomain
 
-class GetWordGenerationSettingsUseCase(
+internal class GetWordGenerationSettingsUseCaseImpl(
     private val wordGeneratorSettingsRepository: WordGeneratorSettingsRepository,
 ) {
     suspend operator fun invoke(): Flow<WordGenerationSettings> {
