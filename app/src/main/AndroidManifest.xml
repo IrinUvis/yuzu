@@ -10,8 +10,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.Yuzu"
-        tools:targetApi="31">
+        tools:targetApi="35">
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
