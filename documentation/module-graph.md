@@ -9,6 +9,7 @@
 
 graph LR
   subgraph :core
+    :core:logger["logger"]
     :core:design-system["design-system"]
     :core:common["common"]
   end
@@ -22,6 +23,7 @@ graph LR
     :feature:wordgenerator["wordgenerator"]
   end
   :domain:wordgeneration --> :data:wordgeneration
+  :data:wordgeneration --> :core:logger
   :app --> :feature:wordgenerator
   :feature:wordgenerator --> :core:design-system
   :feature:wordgenerator --> :domain:wordgeneration
