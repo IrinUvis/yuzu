@@ -6,4 +6,12 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.detekt) apply false
+
+    alias(libs.plugins.module.graph)
+}
+
+moduleGraphConfig {
+    readmePath.set("$rootDir/documentation/module-graph.md")
+    heading = "# Module graph"
+    showFullPath = false
 }
