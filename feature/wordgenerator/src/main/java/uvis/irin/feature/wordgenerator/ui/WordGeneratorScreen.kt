@@ -79,7 +79,6 @@ private fun WordGeneratorScreenRoot(
         modifier = modifier,
         topBar = {
             WordGeneratorTopBar(
-                onNavigationIconClick = {},
                 onHelpClick = onHelpClick,
             )
         },
@@ -107,13 +106,13 @@ private fun WordGeneratorScreenRoot(
 @Composable
 private fun WordGeneratorTopBar(
     modifier: Modifier = Modifier,
-    onNavigationIconClick: () -> Unit,
     onHelpClick: () -> Unit,
 ) {
     YuzuTopBar(
         modifier = modifier,
         title = stringResource(R.string.word_generator_top_bar_title),
-        onNavigationIconClick = onNavigationIconClick,
+        onNavigationIconClick = {},
+        navigationIcon = {},
         actions = {
             IconButton(
                 modifier = modifier,
