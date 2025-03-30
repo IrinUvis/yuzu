@@ -2,7 +2,7 @@ package uvis.irin.yuzu.data.wordgenerator.datastore
 
 import android.util.Log
 import androidx.datastore.core.Serializer
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import uvis.irin.yuzu.data.wordgenerator.model.Difficulty
@@ -16,11 +16,11 @@ object WordGenerationSettingsSerializer : Serializer<WordGenerationSettings> {
     override val defaultValue: WordGenerationSettings
         get() = WordGenerationSettings(
             language = Language.English,
-            partsOfSpeech = persistentListOf(
+            partsOfSpeech = persistentSetOf(
                 PartOfSpeech.Noun,
                 PartOfSpeech.Verb,
             ),
-            difficulties = persistentListOf(Difficulty.CommonlyUsed),
+            difficulties = persistentSetOf(Difficulty.CommonlyUsed),
         )
 
     override suspend fun readFrom(input: InputStream): WordGenerationSettings {
