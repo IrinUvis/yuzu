@@ -1,10 +1,10 @@
 package uvis.irin.feature.wordgenerator.ui
 
-import uvis.irin.core.common.toggleElement
 import uvis.irin.feature.wordgenerator.ui.model.UiDifficulty
 import uvis.irin.feature.wordgenerator.ui.model.UiLanguage
 import uvis.irin.feature.wordgenerator.ui.model.UiPartOfSpeech
 import uvis.irin.feature.wordgenerator.ui.model.UiWordGenerationSettings
+import uvis.irin.yuzu.core.common.toggleElement
 
 data class WordGeneratorUiState(
     val wordGeneration: Generation = Generation(),
