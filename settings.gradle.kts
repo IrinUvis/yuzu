@@ -25,6 +25,7 @@ include(
     ":app",
     ":feature:wordgenerator",
     ":domain:wordgeneration",
+    ":data:genai",
     ":data:wordgeneration",
     ":core:common",
     ":core:design-system",
