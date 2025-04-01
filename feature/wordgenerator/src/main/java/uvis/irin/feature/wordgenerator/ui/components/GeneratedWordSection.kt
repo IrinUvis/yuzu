@@ -20,9 +20,9 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import uvis.irin.core.designsystem.components.animation.AnimatedNullableVisibility
-import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.ui.Generation
+import uvis.irin.yuzu.core.designsystem.components.animation.AnimatedNullableVisibility
+import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
 
 @Composable
 internal fun GeneratedWordSection(

@@ -10,12 +10,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import uvis.irin.core.designsystem.components.checkbox.YuzuCheckboxOption
-import uvis.irin.core.designsystem.components.section.SectionHeader
-import uvis.irin.core.designsystem.components.text.HeaderWithSubtitle
-import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.R
 import uvis.irin.feature.wordgenerator.ui.model.UiPartOfSpeech
+import uvis.irin.yuzu.core.designsystem.components.checkbox.YuzuCheckboxOption
+import uvis.irin.yuzu.core.designsystem.components.section.SectionHeader
+import uvis.irin.yuzu.core.designsystem.components.text.HeaderWithSubtitle
+import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
 
 @Composable
 internal fun PartsOfSpeechOptions(

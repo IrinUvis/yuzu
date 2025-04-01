@@ -24,11 +24,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import uvis.irin.core.designsystem.components.animation.AnimatedNullableVisibility
-import uvis.irin.core.designsystem.components.divider.YuzuExpandableDivider
-import uvis.irin.core.designsystem.components.topbar.YuzuTopBar
-import uvis.irin.core.designsystem.icons.YuzuIcon
-import uvis.irin.core.designsystem.preview.YuzuPreview
 import uvis.irin.feature.wordgenerator.R
 import uvis.irin.feature.wordgenerator.ui.components.DifficultyOptions
 import uvis.irin.feature.wordgenerator.ui.components.GenerateWordButton
@@ -39,6 +34,11 @@ import uvis.irin.feature.wordgenerator.ui.components.PartsOfSpeechOptions
 import uvis.irin.feature.wordgenerator.ui.model.UiDifficulty
 import uvis.irin.feature.wordgenerator.ui.model.UiLanguage
 import uvis.irin.feature.wordgenerator.ui.model.UiPartOfSpeech
+import uvis.irin.yuzu.core.designsystem.components.animation.AnimatedNullableVisibility
+import uvis.irin.yuzu.core.designsystem.components.divider.YuzuExpandableDivider
+import uvis.irin.yuzu.core.designsystem.components.topbar.YuzuTopBar
+import uvis.irin.yuzu.core.designsystem.icons.YuzuIcon
+import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
 
 @Composable
 fun WordGeneratorScreen(

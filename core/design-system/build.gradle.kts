@@ -5,5 +5,5 @@ plugins {
 }
 
 android {
-    namespace = "uvis.irin.core.designsystem"
+    namespace = "uvis.irin.yuzu.core.designsystem"
 }
