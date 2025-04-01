@@ -8,9 +8,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import uvis.irin.feature.wordgenerator.ui.WordGeneratorScreen
-import uvis.irin.feature.wordgenerator.ui.WordGeneratorViewModel
 import uvis.irin.yuzu.core.designsystem.theme.YuzuTheme
+import uvis.irin.yuzu.feature.wordgenerator.ui.WordGeneratorScreen
+import uvis.irin.yuzu.feature.wordgenerator.ui.WordGeneratorViewModel
 
 class MainActivity : ComponentActivity() {
     val viewModel: WordGeneratorViewModel by viewModels()

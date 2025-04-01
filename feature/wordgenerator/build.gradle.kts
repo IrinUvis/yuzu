@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "uvis.irin.feature.wordgenerator"
+    namespace = "uvis.irin.yuzu.feature.wordgenerator"
 }
 
 dependencies {
