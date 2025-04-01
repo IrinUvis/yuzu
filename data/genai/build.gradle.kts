@@ -8,5 +8,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.mediapipe.tasks.genai)
+
     testImplementation(libs.junit)
 }

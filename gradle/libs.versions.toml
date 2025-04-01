@@ -18,6 +18,7 @@ koin = "4.0.3"
 moduleGraph = "0.12.0"
 datastore = "1.1.4"
 kermit = "2.0.4"
+mediapipeTasksGenAi = "0.10.22"
 
 [libraries]
 # Gradle plugins
@@ -57,6 +58,7 @@ koin-compose-navigation = { group = "io.insert-koin", name = "koin-compose-viewm
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 datastore-proto = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
 kermit-logger = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
+mediapipe-tasks-genai = { group = "com.google.mediapipe", name = "tasks-genai", version.ref = "mediapipeTasksGenAi" }
 
 [plugins]
 # Own plugins
