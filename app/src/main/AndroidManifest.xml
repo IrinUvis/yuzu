@@ -13,6 +13,11 @@
         android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.Yuzu"
         tools:targetApi="35">
+
+        <uses-native-library android:name="libOpenCL.so" android:required="false"/>
+        <uses-native-library android:name="libOpenCL-car.so" android:required="false"/>
+        <uses-native-library android:name="libOpenCL-pixel.so" android:required="false"/>
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
