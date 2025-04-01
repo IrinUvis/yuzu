@@ -15,6 +15,7 @@ graph LR
   end
   subgraph :data
     :data:wordgeneration["wordgeneration"]
+    :data:genai["genai"]
   end
   subgraph :domain
     :domain:wordgeneration["wordgeneration"]
@@ -23,6 +24,7 @@ graph LR
     :feature:wordgenerator["wordgenerator"]
   end
   :domain:wordgeneration --> :data:wordgeneration
+  :domain:wordgeneration --> :data:genai
   :data:wordgeneration --> :core:logger
   :app --> :feature:wordgenerator
   :feature:wordgenerator --> :core:design-system

@@ -9,6 +9,7 @@ android {
 
 dependencies {
     implementation(projects.data.wordgeneration)
+    implementation(projects.data.genai)
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
