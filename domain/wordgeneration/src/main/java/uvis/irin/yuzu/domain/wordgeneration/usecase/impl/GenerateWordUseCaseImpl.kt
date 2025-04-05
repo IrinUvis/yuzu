@@ -1,6 +1,7 @@
-package uvis.irin.yuzu.feature.wordgenerator.domain
+package uvis.irin.yuzu.domain.wordgeneration.usecase.impl
 
 import kotlinx.coroutines.delay
+import uvis.irin.yuzu.domain.wordgeneration.usecase.GenerateWordUseCase
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.seconds
 
@@ -9,8 +10,4 @@ internal class GenerateWordUseCaseImpl : GenerateWordUseCase {
         delay(1.seconds)
         return Result.success(value = if (Random.nextBoolean()) "cockroach" else "ladybug")
     }
-}
-
-interface GenerateWordUseCase {
-    suspend operator fun invoke(): Result<String>
 }

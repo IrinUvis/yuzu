@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uvis.irin.yuzu.domain.wordgeneration.usecase.ExplainWordUseCase
+import uvis.irin.yuzu.domain.wordgeneration.usecase.GenerateWordUseCase
 import uvis.irin.yuzu.domain.wordgeneration.usecase.GetWordGenerationSettingsUseCase
 import uvis.irin.yuzu.domain.wordgeneration.usecase.UpdateWordGenerationSettingsUseCase
-import uvis.irin.yuzu.feature.wordgenerator.domain.ExplainWordUseCase
-import uvis.irin.yuzu.feature.wordgenerator.domain.GenerateWordUseCase
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiDifficulty
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiLanguage
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiPartOfSpeech

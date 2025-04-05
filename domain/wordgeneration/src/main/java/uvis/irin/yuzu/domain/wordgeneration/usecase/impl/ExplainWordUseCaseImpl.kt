@@ -1,6 +1,7 @@
-package uvis.irin.yuzu.feature.wordgenerator.domain
+package uvis.irin.yuzu.domain.wordgeneration.usecase.impl
 
 import kotlinx.coroutines.delay
+import uvis.irin.yuzu.domain.wordgeneration.usecase.ExplainWordUseCase
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.seconds
 
@@ -17,8 +18,4 @@ internal class ExplainWordUseCaseImpl : ExplainWordUseCase {
             },
         )
     }
-}
-
-interface ExplainWordUseCase {
-    suspend operator fun invoke(word: String): Result<String>
 }
