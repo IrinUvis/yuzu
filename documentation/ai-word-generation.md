@@ -7,4 +7,6 @@ The variant used is the instruction tuned model in a 4-bit quantized format (gem
 Google AI Edge library
 The model is used via (MediaPipe Tasks Google AI Edge library)[https://ai.google.dev/edge/mediapipe/solutions/tasks].
 
+The model should be put in the assets folder of the :data:genai module
+
 *Note*: The MediaPipe Tasks LLM Inference API does not fully support device emulators so using a physical devices is recommended in order to avoid crashes, performance issues, and unexpected behaviours. 
