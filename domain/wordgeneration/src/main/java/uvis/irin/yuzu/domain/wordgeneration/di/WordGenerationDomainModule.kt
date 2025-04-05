@@ -1,6 +1,7 @@
 package uvis.irin.yuzu.domain.wordgeneration.di
 
 import org.koin.dsl.module
+import uvis.irin.yuzu.core.genai.di.genAiDataModule
 import uvis.irin.yuzu.data.wordgeneration.di.wordGeneratorDataModule
 import uvis.irin.yuzu.domain.wordgeneration.usecase.ExplainWordUseCase
 import uvis.irin.yuzu.domain.wordgeneration.usecase.GenerateWordUseCase
@@ -17,5 +18,5 @@ val wordGenerationDomainModule = module {
     single<UpdateWordGenerationSettingsUseCase> { UpdateWordGenerationSettingsUseCaseImpl(get()) }
     single<GetWordGenerationSettingsUseCase> { GetWordGenerationSettingsUseCaseImpl(get()) }
 
-    includes(wordGeneratorDataModule)
+    includes(wordGeneratorDataModule, genAiDataModule)
 }
