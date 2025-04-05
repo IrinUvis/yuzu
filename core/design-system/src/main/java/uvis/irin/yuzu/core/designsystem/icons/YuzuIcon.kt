@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import uvis.irin.core.designsystem.R
+import uvis.irin.yuzu.core.designsystem.R
 import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
 
 enum class YuzuIcon(

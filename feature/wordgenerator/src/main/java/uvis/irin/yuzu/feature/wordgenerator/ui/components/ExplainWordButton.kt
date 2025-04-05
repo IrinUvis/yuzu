@@ -15,9 +15,9 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import uvis.irin.feature.wordgenerator.R
 import uvis.irin.yuzu.core.designsystem.icons.YuzuIcon
 import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
+import uvis.irin.yuzu.feature.wordgenerator.R
 
 @Composable
 internal fun ExplainWordButton(

@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import uvis.irin.feature.wordgenerator.R
 import uvis.irin.yuzu.core.designsystem.icons.YuzuIcon
 import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
+import uvis.irin.yuzu.feature.wordgenerator.R
 
 @Composable
 internal fun CopyWordButton(

@@ -24,12 +24,12 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import uvis.irin.feature.wordgenerator.R
 import uvis.irin.yuzu.core.designsystem.components.animation.AnimatedNullableVisibility
 import uvis.irin.yuzu.core.designsystem.components.divider.YuzuExpandableDivider
 import uvis.irin.yuzu.core.designsystem.components.topbar.YuzuTopBar
 import uvis.irin.yuzu.core.designsystem.icons.YuzuIcon
 import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
+import uvis.irin.yuzu.feature.wordgenerator.R
 import uvis.irin.yuzu.feature.wordgenerator.ui.components.DifficultyOptions
 import uvis.irin.yuzu.feature.wordgenerator.ui.components.GenerateWordButton
 import uvis.irin.yuzu.feature.wordgenerator.ui.components.GeneratedWordSection
