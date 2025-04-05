@@ -8,6 +8,9 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+
     implementation(libs.mediapipe.tasks.genai)
 
     testImplementation(libs.junit)
