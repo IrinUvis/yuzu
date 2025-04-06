@@ -5,6 +5,10 @@ plugins {
 
 android {
     namespace = "uvis.irin.yuzu.core.genai"
+
+    androidResources {
+        noCompress("task")
+    }
 }
 
 dependencies {
