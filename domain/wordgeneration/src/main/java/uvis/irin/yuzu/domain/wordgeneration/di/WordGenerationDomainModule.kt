@@ -14,7 +14,7 @@ import uvis.irin.yuzu.domain.wordgeneration.usecase.impl.UpdateWordGenerationSet
 
 val wordGenerationDomainModule = module {
     single<ExplainWordUseCase> { ExplainWordUseCaseImpl() }
-    single<GenerateWordUseCase> { GenerateWordUseCaseImpl() }
+    single<GenerateWordUseCase> { GenerateWordUseCaseImpl(get()) }
     single<UpdateWordGenerationSettingsUseCase> { UpdateWordGenerationSettingsUseCaseImpl(get()) }
     single<GetWordGenerationSettingsUseCase> { GetWordGenerationSettingsUseCaseImpl(get()) }
 

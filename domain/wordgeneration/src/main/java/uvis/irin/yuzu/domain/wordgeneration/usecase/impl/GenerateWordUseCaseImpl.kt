@@ -1,13 +1,20 @@
 package uvis.irin.yuzu.domain.wordgeneration.usecase.impl
 
-import kotlinx.coroutines.delay
+import uvis.irin.yuzu.core.genai.repository.GenAiRepository
 import uvis.irin.yuzu.domain.wordgeneration.usecase.GenerateWordUseCase
-import kotlin.random.Random
-import kotlin.time.Duration.Companion.seconds
 
-internal class GenerateWordUseCaseImpl : GenerateWordUseCase {
+internal class GenerateWordUseCaseImpl(
+    private val genAiRepository: GenAiRepository,
+) : GenerateWordUseCase {
     override suspend fun invoke(): Result<String> {
-        delay(1.seconds)
-        return Result.success(value = if (Random.nextBoolean()) "cockroach" else "ladybug")
+        val result = genAiRepository.generateResponse("Generate one random english word and nothing else").fold(
+            onSuccess = { response ->
+                val formattedResponse = response.lowercase()
+                Result.success(formattedResponse)
+            },
+            onFailure = { Result.success("Failure") },
+        )
+
+        return result
     }
 }
