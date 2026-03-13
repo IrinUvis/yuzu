@@ -1,4 +1,3 @@
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
@@ -11,6 +10,7 @@ import uvis.irin.yuzu.findLibsPlugin
 import uvis.irin.yuzu.libs
 import java.io.File
 import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 class DetektConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {

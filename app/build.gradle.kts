@@ -1,10 +1,10 @@
 import uvis.irin.yuzu.YuzuBuildType
 
 plugins {
-    alias(libs.plugins.uvis.irin.android.application)
-    alias(libs.plugins.uvis.irin.android.applicationCompose)
-    alias(libs.plugins.uvis.irin.android.applicationIntegrationTest)
-    alias(libs.plugins.uvis.irin.detekt)
+    alias(libs.plugins.uvis.irin.yuzu.android.application)
+    alias(libs.plugins.uvis.irin.yuzu.android.applicationCompose)
+    alias(libs.plugins.uvis.irin.yuzu.android.applicationIntegrationTest)
+    alias(libs.plugins.uvis.irin.yuzu.detekt)
 }
 
 android {

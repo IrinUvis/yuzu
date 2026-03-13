@@ -1,23 +1,21 @@
 [versions]
-agp = "8.9.1"
-kotlin = "2.1.0"
-coreKtx = "1.15.0"
+agp = "9.1.0"
+kotlin = "2.3.10"
+coreKtx = "1.18.0"
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-kotlinCoroutines = "1.10.1"
-kotlinxCollectionsImmutable = "0.3.5"
-kotlinxSerializationJson = "1.7.3"
-lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.1"
-composeBom = "2025.03.01"
+junitAndroid = "1.3.0"
+espressoCore = "3.7.0"
+kotlinCoroutines = "1.10.2"
+kotlinxCollectionsImmutable = "0.4.0"
+kotlinxSerializationJson = "1.10.0"
+lifecycleRuntimeKtx = "2.10.0"
+activityCompose = "1.13.0"
+composeBom = "2026.03.00"
 detekt = "1.23.8"
-appcompat = "1.7.0"
-material = "1.12.0"
-koin = "4.0.3"
-moduleGraph = "0.12.0"
-datastore = "1.1.4"
-kermit = "2.0.4"
+koin = "4.1.1"
+moduleGraph = "0.13.0"
+datastore = "1.2.1"
+kermit = "2.1.0"
 mediapipeTasksGenAi = "0.10.22"
 
 [libraries]
@@ -29,7 +27,7 @@ detekt-gradle-plugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-g
 # Libraries
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitAndroid" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -43,11 +41,9 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
 koin-core-viewmodel = { group = "io.insert-koin", name = "koin-core-viewmodel"}
@@ -55,29 +51,26 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose" }
 koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel" }
 koin-compose-navigation = { group = "io.insert-koin", name = "koin-compose-viewmodel-navigation" }
-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 datastore-proto = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
 kermit-logger = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
 mediapipe-tasks-genai = { group = "com.google.mediapipe", name = "tasks-genai", version.ref = "mediapipeTasksGenAi" }
 
 [plugins]
 # Own plugins
-uvis-irin-android-application = { id = "uvis.irin.android.application" }
-uvis-irin-android-library = { id = "uvis.irin.android.library" }
-uvis-irin-android-applicationCompose = { id = "uvis.irin.android.applicationCompose" }
-uvis-irin-android-libraryCompose = { id = "uvis.irin.android.libraryCompose" }
-uvis-irin-android-applicationIntegrationTest = { id = "uvis.irin.android.applicationIntegrationTest" }
-uvis-irin-android-libraryIntegrationTest = { id = "uvis.irin.android.libraryIntegrationTest" }
-uvis-irin-detekt = { id = "uvis.irin.detekt" }
-uvis-irin-jvm-library = { id = "uvis.irin.jvm.library" }
+uvis-irin-yuzu-android-application = { id = "uvis.irin.yuzu.android.application" }
+uvis-irin-yuzu-android-library = { id = "uvis.irin.yuzu.android.library" }
+uvis-irin-yuzu-android-applicationCompose = { id = "uvis.irin.yuzu.android.applicationCompose" }
+uvis-irin-yuzu-android-libraryCompose = { id = "uvis.irin.yuzu.android.libraryCompose" }
+uvis-irin-yuzu-android-applicationIntegrationTest = { id = "uvis.irin.yuzu.android.applicationIntegrationTest" }
+uvis-irin-yuzu-android-libraryIntegrationTest = { id = "uvis.irin.yuzu.android.libraryIntegrationTest" }
+uvis-irin-yuzu-detekt = { id = "uvis.irin.yuzu.detekt" }
+uvis-irin-yuzu-jvm-library = { id = "uvis.irin.yuzu.jvm.library" }
 
 # External plugins
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 module-graph = { id = "dev.iurysouza.modulegraph", version.ref = "moduleGraph" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

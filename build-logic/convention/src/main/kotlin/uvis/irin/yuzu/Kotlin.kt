@@ -1,5 +1,3 @@
-@file:Suppress("MagicNumber")
-
 package uvis.irin.yuzu
 
 import com.android.build.api.dsl.CommonExtension
@@ -16,17 +14,14 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
  * Configure base Kotlin with Android options
  */
 internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension,
 ) {
     commonExtension.apply {
         compileSdk = CompileSdk
 
-        defaultConfig {
-            @Suppress("MagicNumber")
-            minSdk = MinSdk
-        }
+        defaultConfig.minSdk = MinSdk
 
-        compileOptions {
+        compileOptions.apply {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
         }
