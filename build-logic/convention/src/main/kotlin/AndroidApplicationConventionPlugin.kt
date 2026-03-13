@@ -1,5 +1,3 @@
-@file:Suppress("MagicNumber")
-
 import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -12,7 +10,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         with(pluginManager) {
             apply(findLibsPlugin("android-application").pluginId)
-            apply(findLibsPlugin("kotlin-android").pluginId)
         }
 
         extensions.configure<ApplicationExtension> {

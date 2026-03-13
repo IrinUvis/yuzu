@@ -1,7 +1,6 @@
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.getByType
 import uvis.irin.yuzu.configureCompose
 import uvis.irin.yuzu.findLibsPlugin

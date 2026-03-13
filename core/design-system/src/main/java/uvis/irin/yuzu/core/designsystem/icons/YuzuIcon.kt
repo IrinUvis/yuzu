@@ -11,7 +11,7 @@ import uvis.irin.yuzu.core.designsystem.R
 import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
 
 enum class YuzuIcon(
-    @DrawableRes val iconRes: Int,
+    @param:DrawableRes val iconRes: Int,
     val contentDescription: String,
 ) {
     AiFeature(R.drawable.ai_feature, "AI Feature"),

@@ -11,15 +11,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ClipEntry
-import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import uvis.irin.yuzu.core.designsystem.components.animation.AnimatedNullableVisibility
 import uvis.irin.yuzu.core.designsystem.preview.YuzuPreview
 import uvis.irin.yuzu.feature.wordgenerator.ui.Generation
@@ -36,7 +38,8 @@ internal fun GeneratedWordSection(
         modifier = modifier.padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val clipboardManager = LocalClipboardManager.current
+        val scope = rememberCoroutineScope()
+        val clipboard = LocalClipboard.current
 
         AnimatedContent(generatedWord) { targetGeneratedWord ->
             GeneratedWord(generatedWord = targetGeneratedWord)
@@ -46,9 +49,11 @@ internal fun GeneratedWordSection(
             isWordGenerating = isWordGenerating,
             isExplanationGenerating = wordExplanationGeneration.isGenerating,
             onCopyClick = {
-                clipboardManager.setClip(
-                    ClipEntry(ClipData.newPlainText("Generated word", generatedWord)),
-                )
+                scope.launch {
+                    clipboard.setClipEntry(
+                        ClipEntry(ClipData.newPlainText("Generated word", generatedWord)),
+                    )
+                }
             },
             onExplainMeaningClick = onExplainMeaningClick,
         )

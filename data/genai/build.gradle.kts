@@ -1,13 +1,13 @@
 plugins {
-    alias(libs.plugins.uvis.irin.android.library)
-    alias(libs.plugins.uvis.irin.detekt)
+    alias(libs.plugins.uvis.irin.yuzu.android.library)
+    alias(libs.plugins.uvis.irin.yuzu.detekt)
 }
 
 android {
     namespace = "uvis.irin.yuzu.core.genai"
 
     androidResources {
-        noCompress("task")
+        noCompress.add("task")
     }
 }
 

@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.uvis.irin.android.library)
-    alias(libs.plugins.uvis.irin.detekt)
+    alias(libs.plugins.uvis.irin.yuzu.android.library)
+    alias(libs.plugins.uvis.irin.yuzu.detekt)
     alias(libs.plugins.kotlin.serialization)
 }
 
