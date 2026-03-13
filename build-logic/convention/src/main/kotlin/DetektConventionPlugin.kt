@@ -19,7 +19,7 @@ class DetektConventionPlugin : Plugin<Project> {
         }
 
         configureDetekt()
-        registerInstallGitHooksTask()
+        registerInstallDetektGitHookTask()
     }
 
     private fun Project.configureDetekt() {
@@ -77,8 +77,8 @@ class DetektConventionPlugin : Plugin<Project> {
             }
     }
 
-    private fun Project.registerInstallGitHooksTask() {
-        tasks.register<Copy>("installGitHooks") {
+    private fun Project.registerInstallDetektGitHookTask() {
+        tasks.register<Copy>("installDetektGitHook") {
             description = "Installs the pre-commit git hook"
             from(File(rootProject.rootDir, "scripts/pre-commit"))
             into(File(rootProject.rootDir, ".git/hooks"))
