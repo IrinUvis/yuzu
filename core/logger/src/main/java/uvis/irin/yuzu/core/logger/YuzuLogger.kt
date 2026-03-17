@@ -3,30 +3,46 @@ package uvis.irin.yuzu.core.logger
 import co.touchlab.kermit.Logger
 import co.touchlab.kermit.Severity
 
-class YuzuLogger(private val kermitLogger: Logger) {
-    fun log(
+interface YuzuLogger {
+    fun logDebug(
         tag: String,
         message: String,
-        severity: LoggerSeverity = LoggerSeverity.Debug,
         throwable: Throwable? = null,
+    )
+
+    fun logError(
+        tag: String,
+        message: String,
+        throwable: Throwable? = null,
+    )
+}
+
+internal class YuzuLoggerImpl(
+    private val kermitLogger: Logger,
+) : YuzuLogger {
+    override fun logDebug(
+        tag: String,
+        message: String,
+        throwable: Throwable?,
     ) {
         kermitLogger.log(
             tag = tag,
             message = message,
-            severity = severity.toKermitSeverity(),
+            severity = Severity.Debug,
             throwable = throwable,
         )
     }
-}
 
-enum class LoggerSeverity {
-    Info,
-    Debug,
-    Error,
-}
-
-private fun LoggerSeverity.toKermitSeverity() = when (this) {
-    LoggerSeverity.Info -> Severity.Info
-    LoggerSeverity.Debug -> Severity.Debug
-    LoggerSeverity.Error -> Severity.Error
+    override fun logError(
+        tag: String,
+        message: String,
+        throwable: Throwable?,
+    ) {
+        kermitLogger.log(
+            tag = tag,
+            message = message,
+            severity = Severity.Debug,
+            throwable = throwable,
+        )
+    }
 }

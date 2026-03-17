@@ -33,3 +33,4 @@ include(
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+include(":domain:genai")
