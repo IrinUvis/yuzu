@@ -3,37 +3,35 @@ package uvis.irin.yuzu.data.wordgeneration.datastore
 import androidx.datastore.core.Serializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import uvis.irin.yuzu.core.logger.LoggerSeverity
 import uvis.irin.yuzu.core.logger.YuzuLogger
-import uvis.irin.yuzu.data.wordgeneration.model.DifficultyModel
-import uvis.irin.yuzu.data.wordgeneration.model.LanguageModel
-import uvis.irin.yuzu.data.wordgeneration.model.PartOfSpeechModel
-import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsDataModel
+import uvis.irin.yuzu.data.wordgeneration.model.Difficulty
+import uvis.irin.yuzu.data.wordgeneration.model.Language
+import uvis.irin.yuzu.data.wordgeneration.model.PartOfSpeech
+import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettings
 import java.io.InputStream
 import java.io.OutputStream
 
-class WordGenerationSettingsSerializer(private val logger: YuzuLogger) : Serializer<WordGenerationSettingsDataModel> {
-    override val defaultValue: WordGenerationSettingsDataModel
-        get() = WordGenerationSettingsDataModel(
-            language = LanguageModel.English,
+internal class WordGenerationSettingsSerializer(private val logger: YuzuLogger) : Serializer<WordGenerationSettings> {
+    override val defaultValue: WordGenerationSettings
+        get() = WordGenerationSettings(
+            language = Language.English,
             partsOfSpeech = setOf(
-                PartOfSpeechModel.Noun,
-                PartOfSpeechModel.Verb,
+                PartOfSpeech.Noun,
+                PartOfSpeech.Verb,
             ),
-            difficulties = setOf(DifficultyModel.CommonlyUsed),
+            difficulties = setOf(Difficulty.CommonlyUsed),
         )
 
-    override suspend fun readFrom(input: InputStream): WordGenerationSettingsDataModel {
+    override suspend fun readFrom(input: InputStream): WordGenerationSettings {
         return try {
             Json.decodeFromString(
-                deserializer = WordGenerationSettingsDataModel.serializer(),
+                deserializer = WordGenerationSettings.serializer(),
                 string = input.readBytes().decodeToString(),
             )
         } catch (e: SerializationException) {
-            logger.log(
-                tag = "WordGenerationSettingsSerializer",
-                message = "Error deserializing WordGenerationSettings",
-                severity = LoggerSeverity.Error,
+            logger.logError(
+                tag = TAG,
+                message = "Error during deserialization of WordGenerationSettings",
                 throwable = e,
             )
             defaultValue
@@ -41,14 +39,18 @@ class WordGenerationSettingsSerializer(private val logger: YuzuLogger) : Seriali
     }
 
     override suspend fun writeTo(
-        t: WordGenerationSettingsDataModel,
+        t: WordGenerationSettings,
         output: OutputStream,
     ) {
         output.write(
             Json.encodeToString(
-                serializer = WordGenerationSettingsDataModel.serializer(),
+                serializer = WordGenerationSettings.serializer(),
                 value = t,
             ).toByteArray(),
         )
+    }
+
+    companion object {
+        private val TAG = WordGenerationSettingsSerializer::class.simpleName!!
     }
 }

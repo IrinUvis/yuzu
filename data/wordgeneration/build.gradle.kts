@@ -16,6 +16,7 @@ dependencies {
 
     implementation(libs.datastore.proto)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.annotation.experimental)
     implementation(libs.kotlinx.collections.immutable)
 
     testImplementation(libs.junit)

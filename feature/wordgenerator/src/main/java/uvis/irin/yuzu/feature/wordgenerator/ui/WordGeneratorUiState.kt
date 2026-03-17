@@ -3,15 +3,29 @@ package uvis.irin.yuzu.feature.wordgenerator.ui
 import uvis.irin.yuzu.core.common.toggleElement
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiDifficulty
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiLanguage
+import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiModelStatus
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiPartOfSpeech
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiWordGenerationSettings
 
 data class WordGeneratorUiState(
+    val aiModel: AiModel = AiModel(),
     val wordGeneration: Generation = Generation(),
     val wordExplanationGeneration: Generation = Generation(),
-    val wordGenerationAvailable: Boolean = false,
     val generationSettings: GenerationSettings = GenerationSettings(),
     val helpVisible: Boolean = false,
+) {
+    val wordGenerationAvailable: Boolean
+        get() {
+            val areSettingsValid = generationSettings.selectedPartsOfSpeech.isNotEmpty() &&
+                generationSettings.selectedDifficulties.isNotEmpty()
+            val isWordOrExplanationGenerating =
+                wordGeneration.isGenerating || wordExplanationGeneration.isGenerating
+            return areSettingsValid && !isWordOrExplanationGenerating
+        }
+}
+
+data class AiModel(
+    val modelStatus: UiModelStatus = UiModelStatus.Unknown,
 )
 
 data class Generation(

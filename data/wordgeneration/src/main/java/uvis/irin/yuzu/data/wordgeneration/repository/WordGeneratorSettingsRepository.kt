@@ -1,10 +1,10 @@
 package uvis.irin.yuzu.data.wordgeneration.repository
 
 import kotlinx.coroutines.flow.Flow
-import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsDataModel
+import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettings
 
 interface WordGeneratorSettingsRepository {
-    suspend fun storeGenerationSettings(generationSettingsPreferences: WordGenerationSettingsDataModel)
+    suspend fun storeGenerationSettings(generationSettingsPreferences: WordGenerationSettings)
 
-    fun generationSettingsFlow(): Flow<WordGenerationSettingsDataModel>
+    fun generationSettingsFlow(): Flow<WordGenerationSettings>
 }
