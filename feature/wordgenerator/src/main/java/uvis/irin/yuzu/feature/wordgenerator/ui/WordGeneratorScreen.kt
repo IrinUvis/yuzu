@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -143,6 +144,9 @@ private fun WordGeneratorContent(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        AiModelStatus(
+            aiModel = wordGeneratorUiState.aiModel,
+        )
         WordGeneratorActions(
             wordGeneration = wordGeneratorUiState.wordGeneration,
             wordExplanationGeneration = wordGeneratorUiState.wordExplanationGeneration,
@@ -158,6 +162,17 @@ private fun WordGeneratorContent(
             onGenerationDifficultyClick = onGenerationDifficultyClick,
         )
     }
+}
+
+@Composable
+private fun AiModelStatus(
+    modifier: Modifier = Modifier,
+    aiModel: AiModel,
+) {
+    Text(
+        modifier = modifier,
+        text = "AI Model Status: ${aiModel.modelStatus}",
+    )
 }
 
 @Composable

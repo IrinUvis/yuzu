@@ -12,10 +12,12 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.logger)
+
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
 
-    implementation(libs.mediapipe.tasks.genai)
+    implementation(libs.mlkit.genai.prompt)
 
     testImplementation(libs.junit)
 }

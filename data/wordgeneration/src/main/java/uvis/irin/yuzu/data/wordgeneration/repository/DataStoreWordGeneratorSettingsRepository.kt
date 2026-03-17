@@ -2,16 +2,16 @@ package uvis.irin.yuzu.data.wordgeneration.repository
 
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
-import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsDataModel
+import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettings
 
-class DataStoreWordGeneratorSettingsRepository(
-    private val dataStore: DataStore<WordGenerationSettingsDataModel>,
+internal class DataStoreWordGeneratorSettingsRepository(
+    private val dataStore: DataStore<WordGenerationSettings>,
 ) : WordGeneratorSettingsRepository {
-    override suspend fun storeGenerationSettings(generationSettingsPreferences: WordGenerationSettingsDataModel) {
+    override suspend fun storeGenerationSettings(generationSettingsPreferences: WordGenerationSettings) {
         dataStore.updateData { generationSettingsPreferences }
     }
 
-    override fun generationSettingsFlow(): Flow<WordGenerationSettingsDataModel> {
+    override fun generationSettingsFlow(): Flow<WordGenerationSettings> {
         return dataStore.data
     }
 }

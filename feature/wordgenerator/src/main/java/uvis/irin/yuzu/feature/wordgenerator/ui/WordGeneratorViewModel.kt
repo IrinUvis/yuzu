@@ -3,92 +3,143 @@ package uvis.irin.yuzu.feature.wordgenerator.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uvis.irin.yuzu.domain.genai.usecase.GetAiModelStatusUseCase
+import uvis.irin.yuzu.domain.wordgeneration.model.GenerateWordsResult
 import uvis.irin.yuzu.domain.wordgeneration.usecase.ExplainWordUseCase
-import uvis.irin.yuzu.domain.wordgeneration.usecase.GenerateWordUseCase
+import uvis.irin.yuzu.domain.wordgeneration.usecase.GenerateWordsUseCase
 import uvis.irin.yuzu.domain.wordgeneration.usecase.GetWordGenerationSettingsUseCase
 import uvis.irin.yuzu.domain.wordgeneration.usecase.UpdateWordGenerationSettingsUseCase
+import uvis.irin.yuzu.feature.wordgenerator.ui.mapper.toDomainModel
+import uvis.irin.yuzu.feature.wordgenerator.ui.mapper.toUiModel
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiDifficulty
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiLanguage
 import uvis.irin.yuzu.feature.wordgenerator.ui.model.UiPartOfSpeech
-import uvis.irin.yuzu.feature.wordgenerator.ui.model.toUiModel
 
+@Suppress("TooManyFunctions")
 class WordGeneratorViewModel(
-    private val generateWordUseCase: GenerateWordUseCase,
+    private val getAiModelStatusUseCase: GetAiModelStatusUseCase,
+    private val generateWordsUseCase: GenerateWordsUseCase,
     private val explainWordUseCase: ExplainWordUseCase,
     private val updateWordGenerationSettingsUseCase: UpdateWordGenerationSettingsUseCase,
-    getWordGenerationSettingsUseCase: GetWordGenerationSettingsUseCase,
+    private val getWordGenerationSettingsUseCase: GetWordGenerationSettingsUseCase,
 ) : ViewModel() {
-    private val _wordGeneration = MutableStateFlow(Generation())
-    private val _explanationGeneration = MutableStateFlow(Generation())
-    private val _isSettingsExpanded = MutableStateFlow(false)
-    private val _helpVisible = MutableStateFlow(false)
+    private val _uiState = MutableStateFlow(WordGeneratorUiState())
+    val uiState = _uiState.asStateFlow()
 
-    val uiState: StateFlow<WordGeneratorUiState> = combine(
-        _wordGeneration,
-        _explanationGeneration,
-        _isSettingsExpanded,
-        getWordGenerationSettingsUseCase().map { it.toUiModel() },
-        _helpVisible,
-    ) { wordGeneration, explanationGeneration, isSettingsExpanded, generationSettings, helpVisible ->
-        val areSettingsValid = generationSettings.partsOfSpeech.isNotEmpty() &&
-            generationSettings.difficulties.isNotEmpty()
-        val isWordOrExplanationGenerating = wordGeneration.isGenerating || explanationGeneration.isGenerating
+    init {
+        initCollectors()
+        loadAiModelStatus()
+    }
 
-        WordGeneratorUiState(
-            wordGeneration = wordGeneration,
-            wordExplanationGeneration = explanationGeneration,
-            wordGenerationAvailable = areSettingsValid && !isWordOrExplanationGenerating,
-            generationSettings = GenerationSettings(
-                isSettingsExpanded = isSettingsExpanded,
-                selectedLanguage = generationSettings.language,
-                selectedPartsOfSpeech = generationSettings.partsOfSpeech,
-                selectedDifficulties = generationSettings.difficulties,
-            ),
-            helpVisible = helpVisible,
-        )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000),
-        initialValue = WordGeneratorUiState(),
-    )
+    private fun initCollectors() {
+        viewModelScope.launch {
+            collectWordGenerationSettings()
+        }
+    }
+
+    private suspend fun collectWordGenerationSettings() {
+        getWordGenerationSettingsUseCase().collect { wordGenerationSettings ->
+            val settings = wordGenerationSettings.toUiModel()
+
+            _uiState.update {
+                it.copy(
+                    generationSettings = it.generationSettings.copy(
+                        selectedLanguage = settings.language,
+                        selectedPartsOfSpeech = settings.partsOfSpeech,
+                        selectedDifficulties = settings.difficulties,
+                    ),
+                )
+            }
+        }
+    }
+
+    private fun loadAiModelStatus() {
+        viewModelScope.launch {
+            val modelStatus = getAiModelStatusUseCase.invoke().toUiModel()
+
+            _uiState.update {
+                it.copy(
+                    aiModel = it.aiModel.copy(modelStatus = modelStatus),
+                )
+            }
+        }
+    }
 
     fun openHelpSheet() {
-        _helpVisible.update { true }
+        _uiState.update {
+            it.copy(
+                helpVisible = true,
+            )
+        }
     }
 
     fun hideHelpSheet() {
-        _helpVisible.update { false }
+        _uiState.update {
+            it.copy(
+                helpVisible = false,
+            )
+        }
     }
 
     fun generateWord() {
         viewModelScope.launch {
-            _wordGeneration.update { it.copy(isGenerating = true) }
-            generateWordUseCase().fold(
-                onSuccess = { word ->
-                    _wordGeneration.update {
-                        it.copy(generation = word, isGenerating = false)
+            _uiState.update { it.copy(wordGeneration = it.wordGeneration.copy(isGenerating = true)) }
+
+            when (val result = generateWordsUseCase.invoke()) {
+                is GenerateWordsResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            wordGeneration = it.wordGeneration.copy(
+                                generation = result.generatedWords.first(),
+                                isGenerating = false,
+                            ),
+                            wordExplanationGeneration = it.wordExplanationGeneration.copy(
+                                generation = null,
+                            ),
+                        )
                     }
-                    _explanationGeneration.update { it.copy(generation = null) }
-                },
-                onFailure = {},
-            )
+                }
+
+                GenerateWordsResult.Failure -> {
+                    _uiState.update {
+                        it.copy(
+                            wordGeneration = it.wordGeneration.copy(
+                                generation = null,
+                                isGenerating = false,
+                            ),
+                        )
+                    }
+                }
+            }
         }
     }
 
     fun explainGeneratedWord() {
         viewModelScope.launch {
-            _explanationGeneration.update { it.copy(isGenerating = true) }
-            _wordGeneration.value.generation?.let { generatedWord ->
+            _uiState.update {
+                it.copy(
+                    wordExplanationGeneration = it.wordExplanationGeneration.copy(
+                        isGenerating = true,
+                    ),
+                )
+            }
+
+            val generatedWord = _uiState.value.wordGeneration.generation
+
+            if (generatedWord != null) {
                 explainWordUseCase(generatedWord).fold(
                     onSuccess = { explanation ->
-                        _explanationGeneration.update { it.copy(generation = explanation, isGenerating = false) }
+                        _uiState.update {
+                            it.copy(
+                                wordExplanationGeneration = it.wordExplanationGeneration.copy(
+                                    generation = explanation,
+                                    isGenerating = false,
+                                ),
+                            )
+                        }
                     },
                     onFailure = {},
                 )
@@ -97,13 +148,19 @@ class WordGeneratorViewModel(
     }
 
     fun toggleSettingsExpanded() {
-        _isSettingsExpanded.update { isSettingsExpanded -> !isSettingsExpanded }
+        _uiState.update {
+            it.copy(
+                generationSettings = it.generationSettings.copy(
+                    isSettingsExpanded = !it.generationSettings.isSettingsExpanded,
+                ),
+            )
+        }
     }
 
     fun toggleLanguageSetting(language: UiLanguage) {
         viewModelScope.launch {
             updateWordGenerationSettingsUseCase(
-                uiState.value.generationSettings
+                _uiState.value.generationSettings
                     .withToggledSetting(language = language)
                     .toUiModel()
                     .toDomainModel(),
@@ -114,7 +171,7 @@ class WordGeneratorViewModel(
     fun togglePartOfSpeechSetting(partOfSpeech: UiPartOfSpeech) {
         viewModelScope.launch {
             updateWordGenerationSettingsUseCase(
-                uiState.value.generationSettings
+                _uiState.value.generationSettings
                     .withToggledSetting(partOfSpeech = partOfSpeech)
                     .toUiModel()
                     .toDomainModel(),
@@ -125,7 +182,7 @@ class WordGeneratorViewModel(
     fun toggleGenerationDifficultySetting(difficulty: UiDifficulty) {
         viewModelScope.launch {
             updateWordGenerationSettingsUseCase(
-                uiState.value.generationSettings
+                _uiState.value.generationSettings
                     .withToggledSetting(difficulty = difficulty)
                     .toUiModel()
                     .toDomainModel(),

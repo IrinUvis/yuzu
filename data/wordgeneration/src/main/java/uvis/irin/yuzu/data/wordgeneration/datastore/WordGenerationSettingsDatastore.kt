@@ -6,12 +6,12 @@ import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStoreFile
 import uvis.irin.yuzu.core.logger.YuzuLogger
-import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettingsDataModel
+import uvis.irin.yuzu.data.wordgeneration.model.WordGenerationSettings
 
 internal fun createWordGenerationSettingsDatastore(
     context: Context,
     logger: YuzuLogger,
-): DataStore<WordGenerationSettingsDataModel> {
+): DataStore<WordGenerationSettings> {
     val serializer = WordGenerationSettingsSerializer(logger)
     return DataStoreFactory.create(
         serializer = serializer,
